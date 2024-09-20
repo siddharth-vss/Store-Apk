@@ -5,94 +5,65 @@
  * @format
  */
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+
+import NetInfo, { NetInfoWifiState } from '@react-native-community/netinfo';
 import type {PropsWithChildren} from 'react';
 import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
   StyleSheet,
   Text,
   useColorScheme,
   View,
 } from 'react-native';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
 
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { Colors } from 'react-native/Libraries/NewAppScreen';
+import { Dashboard, Test } from './src/screens';
 
-function Section({children, title}: SectionProps): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-}
+
+
+const Stack = createNativeStackNavigator();
+
 
 function App(): React.JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
 
-  const backgroundStyle = {
+
+  const [isOnline, setisOnline] = useState<boolean | null>();
+    useEffect(() => {
+      const Net = NetInfo.addEventListener((state) => {
+        // console.log(state.isConnected);
+        setisOnline(state.isConnected);
+        // Alert.alert('', JSON.stringify(state?.ipAddress ?? state?.isConnected));
+        // console.log("Connection type", state.type);
+      });
+
+      return () => {
+        Net();
+      };
+    });
+   
+   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
 
+  // if(!isOnline){
+  //   // Alert.alert('CONNECTON ERROR !!',"Please provide internet connection.")
+  // return(<>
+  //       <View style={[Network.networkView,backgroundStyle]} >
+  //         <Text style={[Network.networkText,{color :'red'}]}>No internet connection</Text>
+  //       </View>
+  //     </>)
+  // }
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+    <NavigationContainer>
+    <Stack.Navigator>
+      <Stack.Screen name="Home" options={{headerShown : false}} component={Dashboard} />
+      <Stack.Screen name="Test" options={{headerShown : false}} component={Test} />
+    </Stack.Navigator>
+  </NavigationContainer>
   );
 }
 
@@ -115,4 +86,28 @@ const styles = StyleSheet.create({
   },
 });
 
+
+
+const Network = StyleSheet.create({
+
+  networkView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F5FCFF',
+  },
+  networkText: {
+    fontSize: 30,
+    marginBottom: 10,
+    fontWeight: '700',
+  },
+  networkButton: {
+    backgroundColor: '#4CAF50',
+    padding: 10,
+    borderRadius: 4,
+    width: '50%',
+  },
+});
 export default App;
+
+
