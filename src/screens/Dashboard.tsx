@@ -1,38 +1,35 @@
-import { FlatList, ScrollView, StyleSheet, Text, View } from 'react-native'
+import { Alert, FlatList, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { useEffect } from 'react'
-import { Card, Topbg } from '../components'
+import { Card, GridBox, Topbg, TouchCard } from '../components'
 import { NavigationProp } from '@react-navigation/native'
+import { heightPercentageToDP } from 'react-native-responsive-screen'
 
-const Dashboard = ({navigation}:{navigation  : NavigationProp<any>}) => {
-    
-    useEffect(() => {
-        setInterval(()=>{
-            navigation.navigate('Test');
-        },2000)
-    }, [])
-    
+const Dashboard = ({ navigation }: { navigation: NavigationProp<any> }) => {
+
+    const navigate = (path = 'Test') => {
+        navigation.navigate(path);
+    }
+
+    const data = [
+        { name: "Profile", path: "Profile" },
+        { name: "Shop", path: "Shop" },
+        { name: "Storage", path: "Yard" },
+        { name: "Invoice", path: "CashCounter" },
+    ]
+
     return (<>
-        <Topbg>
-        </Topbg>
-        
-        <ScrollView style={{height : '70%',width : '100%'}}>
-
-            <View style={{ margin: 10, }} >
-                <View style={[styles.card]} >
-
-                    <Card>
-                        <Text>Card 1</Text>
-                    </Card>
-                    <Card colorCode={1} />
-                </View>
-                <View style={[styles.card]} >
-
-                    <Card colorCode={3} />
-                    <Card colorCode={2} />
-                </View>
+        <View>
+            <View style={{ height: heightPercentageToDP('30%') }} >
+                <Topbg />
             </View>
-         
-        </ScrollView>
+            <GridBox>
+                {data.map((item, index) => (
+                    <TouchCard  handlePress={()=>navigate(item.path) }  style={styles.box} colorCode={Math.floor(Math.random() * (8 + 1))} >
+                        <Text style={{ color: 'white' }} >{item.name}</Text>
+                    </TouchCard>
+                ))}
+            </GridBox>
+        </View>
     </>
     )
 }
@@ -47,5 +44,16 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
+    box: {
+        width: "47%",
+        height: 100,
+        marginHorizontal: 4,
+        padding: 10,
+        borderRadius: 10,
+        marginBottom: 20,
+        justifyContent: "center",
+        alignItems: "center",
+        shadowColor: "#000",
+    }
 
 })

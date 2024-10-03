@@ -10,25 +10,25 @@ import Feed from './Feed'
 const Test = ({...props}) => {
     // console.log(props)
     const Data = [
-        {
-            label: 'Feed',
-            name: 'Feed',
-            component: Feed,
-        },
-        {
-            label: 'Article',
-            name: 'Article',
-            component: Article,
-        },
-        // Add more screens here...
-    ]
-  return (
-    <Drawer screens={Data} />
-    // <Drawer.Navigator>
-    //   <Drawer.Screen name="Feed" component={Feed} />
-    //   <Drawer.Screen name="Article" component={Article} />
-    // </Drawer.Navigator>
-  )
+      {
+          label: 'Feed',
+          name: 'Feed',
+          component: Feed,
+      },
+      {
+          label: 'Article',
+          name: 'Article',
+          component: Article,
+      },
+      // Add more screens here...
+  ]
+return (
+  <Drawer screens={Data} />
+  // <Drawer.Navigator>
+  //   <Drawer.Screen name="Feed" component={Feed} />
+  //   <Drawer.Screen name="Article" component={Article} />
+  // </Drawer.Navigator>
+)
 }
 
 export default Test
