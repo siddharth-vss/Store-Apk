@@ -16,24 +16,20 @@ interface ParentProps{
 const Topbg: React.FC<ParentProps> = ({children }:{children? :React.ReactNode}) => {
   return (
     <LinearGradient start={{x: 1, y: 1}} end={{x: 0, y: 2}} colors={['#404048','#1A1A1A']} style={[styles.card]}>
-
       <Text >Card</Text>
       {children}
     </LinearGradient>
   )
 }
-
+ 
 export default Topbg
 
 const styles = StyleSheet.create({
     card:{
         width: '100%',
-        height: '30%',
+        height: '100%',
         justifyContent: 'center',
         alignItems: 'center',
-        borderBottomLeftRadius: 20,
-        borderBottomRightRadius: 20,
-        // marginBottom: 20,
         paddingHorizontal: 20,
         paddingVertical: 10,
         shadowColor: '#000',
