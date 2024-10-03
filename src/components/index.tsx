@@ -1,3 +1,6 @@
-export { default as Card } from './card.tsx'
-export { default as Topbg } from './Topbg.tsx'
+export { default as Card } from './card'
+export { default as TouchCard } from './TouchCard'
+export { default as Topbg } from './Topbg'
+export { default as Sidebar } from './Sidebar'
+export { default as GridBox } from './GridBox'
 // export { default as  } from './Topbg.tsx'
