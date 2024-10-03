@@ -3,6 +3,7 @@ import React, { Children } from 'react'
 
 
 import { createDrawerNavigator } from '@react-navigation/drawer';
+import { Sidebar } from '../components';
 
 const DrawerX = createDrawerNavigator();
 
@@ -17,9 +18,11 @@ interface ParentProps {
   screens: any;
 }
 const Drawer: React.FC<ParentProps> = ({ screens }) => {
-  // console.log(screens);
+  // console.log(screens.map((e : any)=>e.name));
   return (
-    <DrawerX.Navigator>
+    <DrawerX.Navigator
+    drawerContent={(props) => <Sidebar screens={screens} {...props} />}
+    >
         {screens?.map((e : any)=>{
              return   <DrawerX.Screen key={e.label} name={e.name} component={e.component} />
         })}
