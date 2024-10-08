@@ -3,6 +3,7 @@ import React, { useEffect } from 'react'
 import { Card, GridBox, Topbg, TouchCard } from '../components'
 import { NavigationProp } from '@react-navigation/native'
 import { heightPercentageToDP } from 'react-native-responsive-screen'
+import { Theme } from '../utils'
 
 const Dashboard = ({ navigation }: { navigation: NavigationProp<any> }) => {
 
@@ -16,21 +17,20 @@ const Dashboard = ({ navigation }: { navigation: NavigationProp<any> }) => {
         { name: "Storage", path: "Yard" },
         { name: "Invoice", path: "CashCounter" },
     ]
-
-    return (<>
-        <View>
-            <View style={{ height: heightPercentageToDP('30%') }} >
+    //  random colorCode picker ->> Math.floor(Math.random() * (8 + 1))
+    return (
+        <View style={[styles.container]}>
+            <View style={{ height: heightPercentageToDP('30%')  }} >
                 <Topbg />
             </View>
             <GridBox>
                 {data.map((item, index) => (
-                    <TouchCard  handlePress={()=>navigate(item.path) }  style={styles.box} colorCode={Math.floor(Math.random() * (8 + 1))} >
+                    <TouchCard key={index} handlePress={() => navigate(item.path)} style={styles.box} colorCode={index % 9} >
                         <Text style={{ color: 'white' }} >{item.name}</Text>
                     </TouchCard>
                 ))}
             </GridBox>
         </View>
-    </>
     )
 }
 
@@ -38,6 +38,11 @@ const Dashboard = ({ navigation }: { navigation: NavigationProp<any> }) => {
 export default Dashboard
 
 const styles = StyleSheet.create({
+
+    container: {
+        flex: 1,
+        backgroundColor: Theme.Theme.background,
+    },
 
     card: {
         flexDirection: 'row',
@@ -53,7 +58,11 @@ const styles = StyleSheet.create({
         marginBottom: 20,
         justifyContent: "center",
         alignItems: "center",
-        shadowColor: "#000",
+        shadowColor: "rgb(46 38 61 / 0.2)",
+        shadowOpacity: 1,
+        shadowRadius: 10,
+        elevation: 15,
+        paddingVertical: 10,
     }
 
 })

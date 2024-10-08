@@ -1,17 +1,16 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import axios from 'axios'
 import { ScrollView } from 'react-native'
 import { Card } from '../components'
 import { Image } from 'react-native'
 import { heightPercentageToDP, widthPercentageToDP } from 'react-native-responsive-screen'
-import { Interface } from '../utils'
+import { Interface, SP } from '../utils'
 
 const Shop = () => {
   const [users, setusers] = useState([])
 
   const get = async () => {
-    const data = await axios.get("http://192.168.0.120:3000/user");
+    const data = await SP.get("/user");
     setusers(data.data);
   }
   useEffect(() => {

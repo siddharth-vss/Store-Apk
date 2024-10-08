@@ -9,6 +9,7 @@ interface ParentProps {
     colorCode?: number;
     height?: string;
     width?: string;
+    h?:number;
     colors?: string[];
     style?: StyleProp<ViewStyle>;
     handlePress: any;
@@ -19,6 +20,7 @@ const TouchCard: React.FC<ParentProps> = ({
     children,
     height,
     width,
+    h,
     colors,
     style,
     handlePress,
@@ -27,7 +29,7 @@ const TouchCard: React.FC<ParentProps> = ({
     return (
         <View style={style} >
             <TouchableOpacity onPress={() => handlePress()}>
-                <LinearGradient start={{ x: 1, y: 1 }} end={{ x: 0, y: 2 }} colors={colors ?? [Theme.Grediants[colorCode][0], Theme.Grediants[colorCode][1]]} style={[styles.card, { height: hp(height ?? 13.8), width: wp(width ?? '42.5%') }]}>
+                <LinearGradient start={{ x: 1, y: 1 }} end={{ x: 0, y: 2 }} colors={colors ?? [Theme.Grediants[colorCode][0], Theme.Grediants[colorCode][1]]} style={[styles.card, { height: h ?? hp(height ?? 13.8), width: wp(width ?? '42.5%') },]}>
                     {children}
                 </LinearGradient>
             </TouchableOpacity>
@@ -48,7 +50,12 @@ const styles = StyleSheet.create({
         shadowRadius: 2,
         elevation: 2,
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        borderColor :"#FFFFFF",
+        // borderWidth: 0.4,
+        // padding: 10,
+        // paddingHorizontal: 20,
+        // paddingVertical: 10,
     },
     linearGradient: {
         flex: 1,

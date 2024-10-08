@@ -1,6 +1,7 @@
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 import { heightPercentageToDP } from 'react-native-responsive-screen';
+import { Theme } from '../utils';
 
 
 const Sidebar = (props: any) => {
@@ -21,15 +22,21 @@ const Sidebar = (props: any) => {
                 <Text style={styles.role}>SIddharth</Text>
 
             </View>
-            {screens.map((e: any) => (
-                <View key={e.name} >
-                    <TouchableOpacity style={styles.key} onPress={() => navigate(e.name)} >
-                        {e.icon ? e.icon : <View><Text>&emsp;&emsp;&emsp;</Text></View>}
-                        <Text style={styles.drawerText}>{e.label}</Text>
-                    </TouchableOpacity>
-                    <View style={styles.itemseprater}></View>
-                </View>
-            ))}
+            <ScrollView>
+                {screens.map((e: any) => 
+                (
+                    <View key={e.name} >
+                        <TouchableOpacity style={styles.key} onPress={() => navigate(e.name)} >
+                            {e.icon ? e.icon : <View><Text>&emsp;&emsp;&emsp;</Text></View>}
+                            <Text style={styles.drawerText}>{e.label}</Text>
+                        </TouchableOpacity>
+                        <View style={styles.itemseprater}></View>
+                    </View>
+                ))}
+            </ScrollView>
+            <View>
+
+            </View>
 
         </View>
     )
@@ -43,6 +50,7 @@ const styles = StyleSheet.create({
         borderWidth: StyleSheet.hairlineWidth,
         opacity: 0.3,
     },
+   
     header: {
         fontSize: 24,
         fontWeight: 'bold',
@@ -82,10 +90,10 @@ const styles = StyleSheet.create({
     },
     drawerContent: {
         flex: 1,
-        backgroundColor: '#eee',
+        backgroundColor: Theme.Theme.background,
     },
     drawerText: {
         fontSize: 20,
-        color: '#333',
+        color: Theme.Theme.color,
     },
 })
