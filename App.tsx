@@ -21,10 +21,11 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 import { Dashboard, Splash, Test } from './src/screens';
-import { CashCounter,Profile,Store,Yard, } from './src/screens/Tabs';
+import { CashCounter, Profile, Store, Yard, } from './src/screens/Tabs';
 
 
 import SystemNavigationBar from 'react-native-system-navigation-bar';
+import { Stacks } from './src/Navigation';
 
 
 const Stack = createNativeStackNavigator();
@@ -52,18 +53,48 @@ function App(): React.JSX.Element {
     };
   });
 
+
+  const Data = [
+    {
+      name: "Home",
+      options: { headerShown: false },
+      component: Dashboard
+    },
+    {
+      name: "CashCounter",
+      options: { headerShown: false },
+      component: CashCounter
+    },
+    {
+      name: "Profile",
+      options: { headerShown: false },
+      component: Profile
+    },
+    {
+      name: "Yard",
+      options: { headerShown: false },
+      component: Yard
+    },
+    {
+      name: "Shop",
+      options: { headerShown: false },
+      component: Store
+    },
+  ]
+
+
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
 
 
   useEffect(() => {
-    setInterval(()=>{
+    setInterval(() => {
       setSplash(false);
-    },8000)
-  },[])
-  
-  
+    }, 8000)
+  }, [])
+
+
   if (splash) {
     return (
       <Splash />
@@ -72,13 +103,7 @@ function App(): React.JSX.Element {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="Home" options={{ headerShown: false }} component={Dashboard} />
-        <Stack.Screen name="CashCounter" options={{ headerShown: false }} component={CashCounter} />
-        <Stack.Screen name="Profile" options={{ headerShown: false }} component={Profile} />
-        <Stack.Screen name="Yard" options={{ headerShown: false }} component={Yard} />
-        <Stack.Screen name="Shop" options={{ headerShown: false }} component={Store} />
-      </Stack.Navigator>
+      <Stacks screens={Data} />
     </NavigationContainer>
   );
 }

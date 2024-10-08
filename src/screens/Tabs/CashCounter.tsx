@@ -4,27 +4,30 @@ import { Drawer } from '../../Navigation'
 import { Invoice, Records } from '../../menu'
 import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Theme } from '../../utils';
 
 const CashCounter = () => {
-    // console.log(props)
+    /**
+     * invoice
+     * reacords
+     * 
+     */
     const Data = [
         {
             label: 'Invoice',
             name: 'Invoice',
+            options:{...Theme.options},
             component: Invoice,
-            icon : <FontAwesome6 size={24} name="file-invoice-dollar" />
+            icon : <FontAwesome6 color={Theme.Theme.color} size={24} name="file-invoice-dollar" />
         },
         {
             label: 'Records',
+            options:{...Theme.options},
             name: 'Records',
             component: Records,
-            icon :<MaterialCommunityIcons size={24} name="book-edit-outline" />
+            icon :<MaterialCommunityIcons color={Theme.Theme.color} size={24} name="book-edit-outline" />
         },
-        //<IconClass brand={false} duotone={false} light={false} name="file-invoice-dollar" regular={false} sharp={false} sharpLight={false} sharpSolid={false} solid={false} thin={false} />
-        //     label:'',
-        //     name: '',
-        //     component: ,
-        // },
+
     ]
     return (
         <Drawer screens={Data} />

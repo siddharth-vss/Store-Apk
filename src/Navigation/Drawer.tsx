@@ -24,7 +24,7 @@ const Drawer: React.FC<ParentProps> = ({ screens }) => {
     drawerContent={(props) => <Sidebar screens={screens} {...props} />}
     >
         {screens?.map((e : any)=>{
-             return   <DrawerX.Screen key={e.label} name={e.name} component={e.component} />
+             return   <DrawerX.Screen key={e.label} options={e.options} name={e.name} component={e.component} />
         })}
     </DrawerX.Navigator>
   )

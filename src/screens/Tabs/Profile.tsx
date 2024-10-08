@@ -4,20 +4,25 @@ import { Drawer } from '../../Navigation'
 import {Profiles} from '../../menu'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import Login from '../../menu/Login'
+import { Theme } from '../../utils'
 
 const Profile = () => {
+    /**
+     * 
+     */
     const Data = [
         {
             label: 'Profile',
-            name:  'Profile ',
+            name:  'Profile_',
             component: Profiles,
-            icon : <Ionicons  name='person' size={24}   />,
+            options:{...Theme.options,title:"Profile"},
+            icon : <Ionicons color={Theme.Theme.color} name='person' size={24}   />,
         }, 
-        {
-            label:'Login',
-            name: 'Login',
-            component: Login,
-        },
+        // {
+        //     label:'Login',
+        //     name: 'Login',
+        //     component: Login,
+        // },
         // {
         //     label:'',
         //     name: '',
