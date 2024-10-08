@@ -12,8 +12,34 @@ export const Grediants = [
   {0: '#EE6D86', 1: '#E83F6F'},
 ];
 
-const Primary = '';
-const Secondary = '';
+const dark = true;
+
+export const options = { // for drawer header
+  headerStyle: {
+    backgroundColor: '#6200ee', // Custom background color
+  },
+  headerTintColor: '#fff', // Custom title color
+  headerTitleStyle: {
+    fontWeight: 'bold', // Custom font style
+    fontSize: 20, // Custom font size
+  },
+};
+
+
+const Light = {
+  background: '#F4F5FA',
+  color: '#423B50',
+  card: '#FFFFFF',
+};
+const Dark = {
+  background: '#28243D',
+  color: '#D5D1EA',
+  // card:"#796CBD",
+  card: '#4b456d',
+  // card:"#312D4B",
+};
+
+export const Theme = dark ? Dark : Light;
 const COLORS = [
   '#0088FE',
   '#00C49F',
@@ -66,3 +92,5 @@ const styles = StyleSheet.create({
     margin: 10,
   },
 });
+
+// box-shadow : 0px 4px 10px rgb(46 38 61 / 0.2);
