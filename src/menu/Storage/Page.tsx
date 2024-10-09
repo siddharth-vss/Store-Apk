@@ -59,6 +59,7 @@ const Storage = ({ navigation }: { navigation: NavigationProp<any> }) => {
     <View style={[styles.container]} >
       <Text>Storage : </Text>
       <TextInput
+        autoCapitalize='characters'
         cursorColor={'#FFF'}
         style={styles.input}
         placeholder="Storage Name"
@@ -69,7 +70,7 @@ const Storage = ({ navigation }: { navigation: NavigationProp<any> }) => {
       />
       <ScrollView>
         <GridBox >
-          {(search?.length < 1 && data?.length >0) && <Search />}
+          {(search?.length < 1 && data?.length > 0) && <Search />}
           {(search?.length < 1 && data?.length < 1) && <Loader size={65} color={Theme.COLORS[0]} />}
           {search && search.map((e: Interface.storage, index: number) => (
             <TouchCard handlePress={() => { navigate('Items', { id: e._id }) }} style={styles.box} h={200} colorCode={index % 9} key={e._id}>
@@ -92,7 +93,7 @@ export default Storage
 const styles = StyleSheet.create({
   container: {
     backgroundColor: Theme.Theme.background,
-    height: '100%',
+    flex: 1,
   },
   storage: {
     backgroundColor: "white ",
@@ -130,8 +131,8 @@ const Search = () => {
   setTimeout(() => {
     setp(false)
   }, 5000)
-  if(p){
-    return<Loader size={65} color={Theme.COLORS[0]} />
+  if (p) {
+    return <Loader size={65} color={Theme.COLORS[0]} />
   }
   return <Text style={styles.text}>NO RECORD FOUND</Text>
 }

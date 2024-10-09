@@ -41,6 +41,7 @@ const Dark = {
 
 export const Theme = dark ? Dark : Light;
 export const COLORS = [
+  "#9155fd",
   '#0088FE',
   '#00C49F',
   '#FFBB28',

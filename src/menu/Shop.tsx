@@ -1,10 +1,10 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { ScrollView } from 'react-native'
-import { Card } from '../components'
+import { Card, Loader } from '../components'
 import { Image } from 'react-native'
 import { heightPercentageToDP, widthPercentageToDP } from 'react-native-responsive-screen'
-import { Interface, SP } from '../utils'
+import { Interface, SP, Theme } from '../utils'
 
 const Shop = () => {
   const [users, setusers] = useState([])
@@ -28,27 +28,25 @@ const Shop = () => {
     return groups;
   }, {});
 
-  const tableData = [
-    { id: 1, name: 'John Doe', age: 28, city: 'New York' },
-    { id: 2, name: 'Jane Smith', age: 34, city: 'San Francisco' },
-    { id: 3, name: 'Sam Johnson', age: 45, city: 'Chicago' },
-    { id: 4, name: 'Emily Brown', age: 19, city: 'Miami' },
-  ];
+ 
 
   return (
-    <>
-      <Text>Admin:</Text>
-      <ScrollView style={{height : heightPercentageToDP('15%')}} horizontal={true}>
+    <View  style={[styles.container]}>
+
+      <Text style={[styles.title]}>Admin:</Text>
+      <ScrollView style={{ height: heightPercentageToDP('15%') }} horizontal={true}>
+      {(data?.admin?.length < 1 && users?.length < 1) && <Loader size={65} color={Theme.COLORS[0]} />}
+        
         {data?.admin?.map((item: Interface.User) => (
           // {users.map((item: Interface.User) => (
-          <Card key={item._id} colorCode={Math.floor(Math.random() * (3 + 1))} height={'30%'} width={'100%'} >
+            <Card key={item._id} colorCode={Math.floor(Math.random() * (3 + 1))} height={'30%'} width={'100%'} >
             <View style={styles.card}>
               <Image
                 style={styles.image}
                 source={{
                   uri: item.pic, // Replace with actual image URL
                 }}
-              />
+                />
               <View>
                 <View style={styles.infoContainer}>
                   <Text style={styles.name}>{item.name}</Text>
@@ -70,12 +68,12 @@ const Shop = () => {
         ))}
       </ScrollView>
 
-
-      <Text>Users:</Text>
+      <Text style={[styles.title]} >Users:</Text>
       <ScrollView horizontal={true}>
+        {(data?.user?.length < 1 && users?.length < 1) && <Loader size={65} color={Theme.COLORS[0]} />}
         {data?.user?.map((item: Interface.User) => (
           // {users.map((item: Interface.User) => (
-          <Card key={item._id} colorCode={Math.floor(Math.random() * (3 + 1))} height={'30%'} width={'100%'} >
+            <Card key={item._id} colorCode={Math.floor(Math.random() * (3 + 1))} height={'30%'} width={'100%'} >
             <View style={styles.card}>
               <Image
                 style={styles.image}
@@ -103,16 +101,23 @@ const Shop = () => {
           </Card>
         ))}
       </ScrollView>
-    </>
+    </View>
   )
 }
 
 export default Shop
 
 const styles = StyleSheet.create({
+  title:{
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: Theme.Theme.color,
+    marginBottom: 20,
+    marginLeft: 10,
+  },
   container: {
-    width: '100%',
-    height: '100%',
+    backgroundColor: Theme.Theme.background,
+    flex : 1,
   },
   card: {
     width: '100%',
