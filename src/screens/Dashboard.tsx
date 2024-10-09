@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
 
     container: {
         flex: 1,
-        backgroundColor: Theme.Theme.background,
+        backgroundColor: Theme.Theme.card,
     },
 
     card: {

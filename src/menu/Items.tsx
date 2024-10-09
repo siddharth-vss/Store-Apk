@@ -1,7 +1,7 @@
 import { Alert, Image, ScrollView, StyleSheet, Text, View } from 'react-native'
 import React, { useEffect, useMemo, useState } from 'react'
 import { Interface, SP, Theme } from '../utils'
-import { GridBox } from '../components'
+import { GridBox, Loader } from '../components'
 import { TouchableOpacity } from 'react-native'
 
 const Items = ({ ...props }) => {
@@ -21,7 +21,7 @@ const Items = ({ ...props }) => {
   const alert=(e : Interface.Item)=>{
     Alert.alert(e.name,`Description : ${e.description}\nPrice : ₹${e.price} \nQuantity : ${e.quantity} \nStorage : ${e.storage.name}`);
   }
-  console.log(Items.length);
+  console.log(Items?.length);
 
   useMemo(() => getData(), [route?.params?.id])
   // useEffect(() => {
@@ -31,6 +31,8 @@ const Items = ({ ...props }) => {
   return (
     <View style={[styles.container]} >
       <ScrollView>
+      {!Items && <Loader size={65} color={Theme.COLORS[0]} />}
+
         <GridBox>
           {Items.map((item, index) => (
             <TouchableOpacity onPress={() =>alert(item)} key={index} style={styles.block} >

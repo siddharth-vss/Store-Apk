@@ -1,7 +1,7 @@
 import { Alert, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { Interface, SP, Theme } from '../../utils'
-import { GridBox } from '../../components'
+import { GridBox, Loader } from '../../components'
 
 const Items = ({ ...props }) => {
 
@@ -30,6 +30,7 @@ const Items = ({ ...props }) => {
     return (
         <View style={[styles.container]}>
             <ScrollView>
+                    {Items?.length < 1 && <Loader size={65} color={Theme.COLORS[0]} />}
                 <GridBox>
                     {Items.map((item, index) => (
                         <TouchableOpacity onPress={() => alert(item)} key={index} style={styles.block} >
@@ -50,7 +51,7 @@ const Items = ({ ...props }) => {
 export default Items
 
 const styles = StyleSheet.create({
-    container :{
+    container: {
         flex: 1,
         backgroundColor: Theme.Theme.background,
         paddingHorizontal: 10,
@@ -65,28 +66,28 @@ const styles = StyleSheet.create({
         marginTop: "10%",
         resizeMode: 'cover',
         borderRadius: 15,
-      },
-    
-      text: {
+    },
+
+    text: {
         color: Theme.Theme.color,
         textAlign: 'center',
         fontSize: 18,
         fontWeight: 'bold',
         marginTop: 0,
         marginBottom: 10,
-      },
-      block: {
+    },
+    block: {
         width: '47%',
         backgroundColor: Theme.Theme.card,
         marginVertical: 10,
         borderRadius: 15,
         height: 'auto',
-        shadowColor :"rgb(46 38 61 / 0.2)",
-        shadowOpacity : 1,
-        shadowRadius : 10,
-        elevation : 15,
+        shadowColor: "rgb(46 38 61 / 0.2)",
+        shadowOpacity: 1,
+        shadowRadius: 10,
+        elevation: 15,
         justifyContent: 'center',
         alignItems: 'center',
         paddingVertical: 10,
-      },
+    },
 })

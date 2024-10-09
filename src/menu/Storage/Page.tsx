@@ -2,7 +2,7 @@ import { Alert, ScrollView, StyleSheet, Text, TextInput, View } from 'react-nati
 import React, { useEffect, useMemo, useState } from 'react'
 import axios from 'axios'
 import { Interface, SP, Theme } from '../../utils'
-import { Card, GridBox, TouchCard } from '../../components'
+import { Card, GridBox, Loader, TouchCard } from '../../components'
 import { widthPercentageToDP } from 'react-native-responsive-screen'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import { NavigationProp } from '@react-navigation/native'
@@ -14,10 +14,10 @@ const Storage = ({ navigation }: { navigation: NavigationProp<any> }) => {
   const [value, setValue] = useState('')
 
 
-  const navigate = (path = 'Test', data:{}) => {
-    navigation.navigate(path,{...data});
-}
-console.log(data.length,search.length);
+  const navigate = (path = 'Test', data: {}) => {
+    navigation.navigate(path, { ...data });
+  }
+  console.log(data?.length, search?.length);
 
   const getData = async () => {
     try {
@@ -36,17 +36,17 @@ console.log(data.length,search.length);
   // }, [])
   useEffect(() => {
     const result = data.filter((e: Interface.storage) => {
-      if (value.length > 0) {
+      if (value?.length > 0) {
         if (e.name.includes(value.toLocaleUpperCase())) {
           return e;
         }
       }
     })
-    if (result.length > 0) {
+    if (result?.length > 0) {
       setsearch([...result]);
     }
     else {
-      if (value.length > 0) {
+      if (value?.length > 0) {
         setsearch([]);
       }
       else {
@@ -69,8 +69,10 @@ console.log(data.length,search.length);
       />
       <ScrollView>
         <GridBox >
+          {(search?.length < 1 && data?.length >0) && <Search />}
+          {(search?.length < 1 && data?.length < 1) && <Loader size={65} color={Theme.COLORS[0]} />}
           {search && search.map((e: Interface.storage, index: number) => (
-            <TouchCard handlePress={() => { navigate('Items',{id : e._id}) }} style={styles.box} h={200} colorCode={index % 9} key={e._id}>
+            <TouchCard handlePress={() => { navigate('Items', { id: e._id }) }} style={styles.box} h={200} colorCode={index % 9} key={e._id}>
               {/* random color  */}
               {/* <TouchCard handlePress={() => { Alert.alert(e.name) }} style={styles.box} h={200} colorCode={Math.floor(Math.random() * (8 + 1))} key={e._id}> */}
               <Text style={styles.text} >{e.name}</Text>
@@ -84,12 +86,13 @@ console.log(data.length,search.length);
   )
 }
 
+
 export default Storage
 
 const styles = StyleSheet.create({
-  container:{
-    backgroundColor :Theme.Theme.background,
-    height : '100%',
+  container: {
+    backgroundColor: Theme.Theme.background,
+    height: '100%',
   },
   storage: {
     backgroundColor: "white ",
@@ -120,3 +123,15 @@ const styles = StyleSheet.create({
     color: '#fff',
   },
 })
+
+
+const Search = () => {
+  const [p, setp] = useState(true)
+  setTimeout(() => {
+    setp(false)
+  }, 5000)
+  if(p){
+    return<Loader size={65} color={Theme.COLORS[0]} />
+  }
+  return <Text style={styles.text}>NO RECORD FOUND</Text>
+}
