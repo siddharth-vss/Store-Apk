@@ -1,8 +1,8 @@
-import { Alert, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native'
+import { Alert, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { useEffect, useMemo, useState } from 'react'
 import axios from 'axios'
 import { Interface, SP, Theme } from '../../utils'
-import { Card, GridBox, Loader, TouchCard } from '../../components'
+import { Card, GridBox, Loader, Select, TouchCard } from '../../components'
 import { widthPercentageToDP } from 'react-native-responsive-screen'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import { NavigationProp } from '@react-navigation/native'
@@ -11,13 +11,19 @@ const Storage = ({ navigation }: { navigation: NavigationProp<any> }) => {
 
   const [data, setdata] = useState([])
   const [search, setsearch] = useState<Interface.storage[]>([])
-  const [value, setValue] = useState('')
+  const [Space, setSpace] = useState('')
+  const [Manager, setManager] = useState<Interface.User | null>()
 
 
   const navigate = (path = 'Test', data: {}) => {
     navigation.navigate(path, { ...data });
   }
-  console.log(data?.length, search?.length);
+
+  const clear = ()=>{
+    setSpace('');
+    setManager(null);
+    setsearch([...data]);
+  } 
 
   const getData = async () => {
     try {
@@ -35,40 +41,74 @@ const Storage = ({ navigation }: { navigation: NavigationProp<any> }) => {
   //   getData();
   // }, [])
   useEffect(() => {
-    const result = data.filter((e: Interface.storage) => {
-      if (value?.length > 0) {
-        if (e.name.includes(value.toLocaleUpperCase())) {
-          return e;
-        }
-      }
-    })
+    let result = [...data];
+    if (Space?.length > 0) {
+      result = result.filter((e: Interface.storage) => e.name.includes(Space.toLocaleUpperCase()));
+    }
+    if (Manager) {
+      result = result.filter((e: Interface.storage) => e.manager.includes(Manager?._id ?? ""));
+    }
+
     if (result?.length > 0) {
       setsearch([...result]);
     }
     else {
-      if (value?.length > 0) {
+      if (Space?.length > 0) {
+        setsearch([]);
+      }
+      else if (Manager) {
         setsearch([]);
       }
       else {
         setsearch([...data]);
       }
     }
-  }, [value])
+  }, [Space, Manager])
 
   return (
     <View style={[styles.container]} >
-      <Text>Storage : </Text>
-      <TextInput
-        autoCapitalize='characters'
-        cursorColor={'#FFF'}
-        style={styles.input}
-        placeholder="Storage Name"
-        placeholderTextColor="#ccc"
-        value={value}
-        onChangeText={setValue}
-        keyboardType="email-address"
-      />
+      <Text style={[styles.text, { fontSize: 25 }]} >Storage : </Text>
+      <View style={styles.boxCard} >
+        <View style={styles.row}>
+          <View style={styles.search}>
+            <Text style={styles.searchText}>Search : </Text>
+          </View>
+          <TextInput
+            autoCapitalize='characters'
+            style={styles.input}
+            placeholder="Storage Name"
+            cursorColor={'#FFF'}
+            placeholderTextColor="#ccc"
+            value={Space}
+            onChangeText={setSpace}
+            keyboardType="email-address"
+          />
+        </View>
+        <View style={styles.row}>
+          <View style={styles.search}>
+            <Text style={styles.searchText}>Manager : </Text>
+          </View>
+          {/* <TextInput
+            cursorColor={'#FFF'}
+            style={styles.input}
+            placeholder="Manager Name"
+            placeholderTextColor="#ccc"
+            value={value}
+            onChangeText={setValue}
+            keyboardType="email-address"
+          /> */}
+          <View style={{ width: '47%' }}>
+            <Select selectedOption={Manager} setSelectedOption={setManager} options={DATA} placeholder='Manager name' />
+          </View>
+        </View>
+        <View style={styles.row}>
+          <TouchableOpacity style={styles.button} onPress={clear}>
+            <Text style={styles.buttonText} >Clear</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
       <ScrollView>
+
         <GridBox >
           {(search?.length < 1 && data?.length > 0) && <Search />}
           {(search?.length < 1 && data?.length < 1) && <Loader size={65} color={Theme.COLORS[0]} />}
@@ -91,6 +131,62 @@ const Storage = ({ navigation }: { navigation: NavigationProp<any> }) => {
 export default Storage
 
 const styles = StyleSheet.create({
+  boxCard: {
+    backgroundColor: Theme.Theme.card,
+    // borderColor :Theme.Theme.contrast,
+    // height:100,
+    padding: 10,
+    paddingHorizontal: 20,
+    marginBottom: 10,
+    borderRadius: 10,
+    shadowColor: '#ccc',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    elevation: 1,
+    // borderWidth:0.5,
+  },
+  row: {
+    flexDirection: 'row',
+    //  justifyContent: "space-between",
+    marginBottom: 10,
+  },
+  search: {
+    // backgroundColor: "#9155fd",
+    // width: "95%",
+    // borderRadius: 10,
+    // paddingHorizontal: 15,
+    // marginBottom: 15,
+    // justifyContent: "center",
+    // alignItems: "center",
+  },
+  button:{
+    backgroundColor: Theme.COLORS[0],
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+    justifyContent: "center",
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    elevation: 1,
+    // borderWidth:0.5,
+  },
+  buttonText:{
+    fontSize: 18,
+    color: Theme.Theme.color,
+    fontWeight: "bold",
+  },
+  searchText: {
+    fontSize: 18,
+    color: Theme.Theme.color,
+    alignItems: "center",
+    marginLeft: 10,
+    fontWeight: "bold",
+    marginTop: 12.5,
+  },
   container: {
     backgroundColor: Theme.Theme.background,
     flex: 1,
@@ -117,11 +213,14 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 50,
-    backgroundColor: '#9155fd',
+    backgroundColor: Theme.Theme.background,
     marginBottom: 15,
     borderRadius: 10,
+    width: '50%',
     paddingHorizontal: 15,
     color: '#fff',
+    borderColor: Theme.Theme.contrast,
+    borderWidth: 1,
   },
 })
 
@@ -136,3 +235,40 @@ const Search = () => {
   }
   return <Text style={styles.text}>NO RECORD FOUND</Text>
 }
+
+
+const DATA = [
+  {
+    "_id": "66f1424247209feecb829759",
+    "name": "John Doe",
+    "email": "john.doe@example.com",
+    "role": "user",
+    "mobile": '9876543260',
+    "pic": "https://res.cloudinary.com/dabh5hsuk/image/upload/v1698927011/fvjydafhxp8jwfaxpqwy.webp",
+    "createdAt": "2024-09-23T10:26:10.720Z",
+    "updatedAt": "2024-09-23T10:26:10.720Z",
+    "__v": 0
+  },
+  {
+    "_id": "66f2acefc1cc981c38abf203",
+    "name": "Siddharth",
+    "email": "vadodariyasiddhartha2056@gmail.com",
+    "role": "user",
+    "mobile": '1023456789',
+    "pic": "https://res.cloudinary.com/dabh5hsuk/image/upload/v1698927011/fvjydafhxp8jwfaxpqwy.webp",
+    "createdAt": "2024-09-24T12:13:35.150Z",
+    "updatedAt": "2024-09-24T12:13:35.150Z",
+    "__v": 0
+  },
+  {
+    "_id": "66f55fc786f9869978a74744",
+    "name": "S.P.",
+    "email": "sp@mail.com",
+    "role": "admin",
+    "mobile": '1203456789',
+    "pic": "https://res.cloudinary.com/dabh5hsuk/image/upload/v1709213851/wd6xe1t3b4r2xhtm3wql.png",
+    "createdAt": "2024-09-26T13:21:11.548Z",
+    "updatedAt": "2024-09-26T13:21:11.548Z",
+    "__v": 0
+  }
+] 

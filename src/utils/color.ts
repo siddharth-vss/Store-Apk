@@ -30,12 +30,14 @@ const Light = {
   background: '#F4F5FA',
   color: '#423B50',
   card: '#FFFFFF',
+  contrast :'#DFE1E2',
 };
 const Dark = {
   background: '#28243D',
   color: '#D5D1EA',
   // card:"#796CBD",
   card: '#4b456d',
+  contrast :'#D5D1EA',
   // card:"#312D4B",
 };
 
