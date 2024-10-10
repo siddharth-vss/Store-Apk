@@ -3,9 +3,9 @@ import React, { useEffect, useState } from 'react'
 import { Interface, SP, Theme } from '../../utils'
 import { GridBox, Loader } from '../../components'
 
-const Items = ({ ...props }) => {
+const Items = ({...props}) => {
 
-    const { route } = props;
+    const { route,navigation } = props;
 
     const [Items, setItems] = useState<Interface.Item[]>([])
     const getData = async () => {
@@ -13,6 +13,13 @@ const Items = ({ ...props }) => {
 
         try {
             const response = await (await SP.get(url)).data
+
+            if(response.length == 0 ){
+                Alert.alert("No items found in this storage");
+                navigation.goBack();
+                return false;
+            }
+
             setItems(response)
         } catch (error) {
             console.error('Error:', error)
