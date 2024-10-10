@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
   },
   optionText: {
     fontSize: 16,
-    color: Theme.Theme.color,
+    color: Theme.COLORS[0],
   },
 });
 

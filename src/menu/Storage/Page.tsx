@@ -208,7 +208,7 @@ const styles = StyleSheet.create({
   text: {
     fontSize: widthPercentageToDP('15%'),
     fontWeight: "bold",
-    color: "#FFF",
+    color: Theme.Theme.color,
     // marginBottom:5,
   },
   input: {
