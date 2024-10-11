@@ -88,11 +88,11 @@ function App(): React.JSX.Element {
   };
 
 
-  useEffect(() => {
+  // useEffect(() => {
     setInterval(() => {
       setSplash(false);
     }, 8000)
-  }, [])
+  // }, [])
 
 
   if (splash) {
