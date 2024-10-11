@@ -9,6 +9,50 @@ interface CustomSelects {
   setSelectedOption: any,
 }
 const CustomSelect: React.FC<CustomSelects> = ({ options, placeholder,selectedOption,setSelectedOption }) => {
+
+  const Themes = Theme.Style();
+  const styles = StyleSheet.create({
+    container: {
+      width: '100%',
+    },
+    inputContainer: {
+      height: 50,
+      backgroundColor: Themes.background,
+      marginBottom: 15,
+      borderRadius: 10,
+      paddingHorizontal: 15,
+      color: '#fff',
+      borderColor: Themes.contrast,
+      borderWidth: 1,
+    },
+    input: {
+      fontSize: 16,
+      color: Themes.color,
+      backgroundColor: Themes.background,
+    },
+    modalOverlay: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    },
+    modalContent: {
+      width: '80%',
+      backgroundColor: 'white',
+      borderRadius: 10,
+      padding: 10,
+    },
+    option: {
+      paddingVertical: 10,
+      borderBottomWidth: 1,
+      borderBottomColor: '#ccc',
+    },
+    optionText: {
+      fontSize: 16,
+      color: Theme.COLORS[0],
+    },
+  });
+
   const [isModalVisible, setModalVisible] = useState(false);
   // const [selectedOption, setSelectedOption] = useState('');
 
@@ -54,46 +98,6 @@ const CustomSelect: React.FC<CustomSelects> = ({ options, placeholder,selectedOp
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    width: '100%',
-  },
-  inputContainer: {
-    height: 50,
-    backgroundColor: Theme.Theme.background,
-    marginBottom: 15,
-    borderRadius: 10,
-    paddingHorizontal: 15,
-    color: '#fff',
-    borderColor: Theme.Theme.contrast,
-    borderWidth: 1,
-  },
-  input: {
-    fontSize: 16,
-    color: Theme.Theme.color,
-    backgroundColor: Theme.Theme.background,
-  },
-  modalOverlay: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-  },
-  modalContent: {
-    width: '80%',
-    backgroundColor: 'white',
-    borderRadius: 10,
-    padding: 10,
-  },
-  option: {
-    paddingVertical: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
-  },
-  optionText: {
-    fontSize: 16,
-    color: Theme.COLORS[0],
-  },
-});
+
 
 export default CustomSelect;

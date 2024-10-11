@@ -1,10 +1,53 @@
 import { Alert, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { Interface, SP, Theme } from '../../utils'
+import { Interface, SP, Theme , CSS } from '../../utils'
 import { GridBox, Loader } from '../../components'
 
 const Items = ({...props}) => {
 
+    const Themes = Theme.Style();
+    const Css = CSS.Styles();
+
+
+    const styles = StyleSheet.create({
+        container: {
+            paddingHorizontal: 10,
+            paddingVertical: 20,
+            justifyContent: 'center',
+            alignItems: 'center',
+        },
+        img: {
+            margin: 'auto',
+            width: '80%',
+            height: 100,
+            marginTop: "10%",
+            resizeMode: 'cover',
+            borderRadius: 15,
+        },
+    
+        text: {
+            color: Themes.color,
+            textAlign: 'center',
+            fontSize: 18,
+            fontWeight: 'bold',
+            marginTop: 0,
+            marginBottom: 10,
+        },
+        block: {
+            width: '47%',
+            backgroundColor: Themes.card,
+            marginVertical: 10,
+            borderRadius: 15,
+            height: 'auto',
+            shadowColor: "rgb(46 38 61 / 0.2)",
+            shadowOpacity: 1,
+            shadowRadius: 10,
+            elevation: 15,
+            justifyContent: 'center',
+            alignItems: 'center',
+            paddingVertical: 10,
+        },
+    })
     const { route,navigation } = props;
 
     const [Items, setItems] = useState<Interface.Item[]>([])
@@ -35,7 +78,7 @@ const Items = ({...props}) => {
     }, [Items, route?.params?.id])
 
     return (
-        <View style={[styles.container]}>
+        <View style={[styles.container,Css.container]}>
             <ScrollView>
                     {Items?.length < 1 && <Loader size={65} color={Theme.COLORS[0]} />}
                 <GridBox>
@@ -56,45 +99,3 @@ const Items = ({...props}) => {
 }
 
 export default Items
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: Theme.Theme.background,
-        paddingHorizontal: 10,
-        paddingVertical: 20,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    img: {
-        margin: 'auto',
-        width: '80%',
-        height: 100,
-        marginTop: "10%",
-        resizeMode: 'cover',
-        borderRadius: 15,
-    },
-
-    text: {
-        color: Theme.Theme.color,
-        textAlign: 'center',
-        fontSize: 18,
-        fontWeight: 'bold',
-        marginTop: 0,
-        marginBottom: 10,
-    },
-    block: {
-        width: '47%',
-        backgroundColor: Theme.Theme.card,
-        marginVertical: 10,
-        borderRadius: 15,
-        height: 'auto',
-        shadowColor: "rgb(46 38 61 / 0.2)",
-        shadowOpacity: 1,
-        shadowRadius: 10,
-        elevation: 15,
-        justifyContent: 'center',
-        alignItems: 'center',
-        paddingVertical: 10,
-    },
-})

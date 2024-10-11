@@ -1,29 +1,101 @@
-import { Alert, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import {  ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { useEffect, useMemo, useState } from 'react'
-import axios from 'axios'
-import { Interface, SP, Theme } from '../../utils'
-import { Card, GridBox, Loader, Select, TouchCard } from '../../components'
+import { CSS, Interface, SP, Theme } from '../../utils'
+import {  GridBox, Loader, Select, TouchCard } from '../../components'
 import { widthPercentageToDP } from 'react-native-responsive-screen'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import { NavigationProp } from '@react-navigation/native'
 
 const Storage = ({ navigation }: { navigation: NavigationProp<any> }) => {
 
+  const Themes = Theme.Style();
+  const Css = CSS.Styles();
+  const styles = StyleSheet.create({
+
+
+    button: {
+      backgroundColor: Theme.COLORS[0],
+      paddingVertical: 10,
+      paddingHorizontal: 20,
+      borderRadius: 10,
+      justifyContent: "center",
+      alignItems: "center",
+      shadowColor: "#000",
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.8,
+      shadowRadius: 2,
+      elevation: 1,
+    },
+    buttonText: {
+      fontSize: 18,
+      color: Themes.color,
+      fontWeight: "bold",
+    },
+    searchText: {
+      fontSize: 18,
+      color: Themes.color,
+      alignItems: "center",
+      marginLeft: 10,
+      fontWeight: "bold",
+      marginTop: 12.5,
+    },
+    storage: {
+      backgroundColor: "white ",
+    },
+    box: {
+      width: "47%",
+      height: 200,
+      marginHorizontal: 4,
+      marginVertical: 10,
+      padding: 10,
+      borderRadius: 10,
+      justifyContent: "center",
+      alignItems: "center",
+      shadowColor: "#000",
+    },
+    text: {
+      fontSize: widthPercentageToDP('15%'),
+      fontWeight: "bold",
+      color: "#FFF",
+      // marginBottom:5,
+    },
+    input: {
+      height: 50,
+      backgroundColor: Themes.background,
+      marginBottom: 15,
+      borderRadius: 10,
+      width: '50%',
+      paddingHorizontal: 15,
+      color: Themes.color,
+      borderColor: Themes.contrast,
+      borderWidth: 1,
+    },
+  })
+
   const [data, setdata] = useState([])
   const [search, setsearch] = useState<Interface.storage[]>([])
   const [Space, setSpace] = useState('')
   const [Manager, setManager] = useState<Interface.User | null>()
 
-
+  const Search = () => {
+    const [p, setp] = useState(true)
+    setTimeout(() => {
+      setp(false)
+    }, 5000)
+    if (p) {
+      return <Loader size={65} color={Theme.COLORS[0]} />
+    }
+    return <Text style={styles.text}>NO RECORD FOUND</Text>
+  }
   const navigate = (path = 'Test', data: {}) => {
     navigation.navigate(path, { ...data });
   }
 
-  const clear = ()=>{
+  const clear = () => {
     setSpace('');
     setManager(null);
     setsearch([...data]);
-  } 
+  }
 
   const getData = async () => {
     try {
@@ -66,13 +138,11 @@ const Storage = ({ navigation }: { navigation: NavigationProp<any> }) => {
   }, [Space, Manager])
 
   return (
-    <View style={[styles.container]} >
-      <Text style={[styles.text, { fontSize: 25 }]} >Storage : </Text>
-      <View style={styles.boxCard} >
-        <View style={styles.row}>
-          <View style={styles.search}>
-            <Text style={styles.searchText}>Search : </Text>
-          </View>
+    <View style={[Css.container]} >
+      <Text style={[styles.text, { fontSize: 25, color: Themes.color }]} >Storage : </Text>
+      <View style={Css.card} >
+        <View style={Css.row}>
+          <Text style={styles.searchText}>Search : </Text>
           <TextInput
             autoCapitalize='characters'
             style={styles.input}
@@ -84,24 +154,13 @@ const Storage = ({ navigation }: { navigation: NavigationProp<any> }) => {
             keyboardType="email-address"
           />
         </View>
-        <View style={styles.row}>
-          <View style={styles.search}>
+        <View style={Css.row}>
             <Text style={styles.searchText}>Manager : </Text>
-          </View>
-          {/* <TextInput
-            cursorColor={'#FFF'}
-            style={styles.input}
-            placeholder="Manager Name"
-            placeholderTextColor="#ccc"
-            value={value}
-            onChangeText={setValue}
-            keyboardType="email-address"
-          /> */}
           <View style={{ width: '47%' }}>
             <Select selectedOption={Manager} setSelectedOption={setManager} options={DATA} placeholder='Manager name' />
           </View>
         </View>
-        <View style={styles.row}>
+        <View style={Css.row}>
           <TouchableOpacity style={styles.button} onPress={clear}>
             <Text style={styles.buttonText} >Clear</Text>
           </TouchableOpacity>
@@ -129,113 +188,6 @@ const Storage = ({ navigation }: { navigation: NavigationProp<any> }) => {
 
 
 export default Storage
-
-const styles = StyleSheet.create({
-  boxCard: {
-    backgroundColor: Theme.Theme.card,
-    // borderColor :Theme.Theme.contrast,
-    // height:100,
-    padding: 10,
-    paddingHorizontal: 20,
-    marginBottom: 10,
-    borderRadius: 10,
-    shadowColor: '#ccc',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.8,
-    shadowRadius: 2,
-    elevation: 1,
-    // borderWidth:0.5,
-  },
-  row: {
-    flexDirection: 'row',
-    //  justifyContent: "space-between",
-    marginBottom: 10,
-  },
-  search: {
-    // backgroundColor: "#9155fd",
-    // width: "95%",
-    // borderRadius: 10,
-    // paddingHorizontal: 15,
-    // marginBottom: 15,
-    // justifyContent: "center",
-    // alignItems: "center",
-  },
-  button:{
-    backgroundColor: Theme.COLORS[0],
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 10,
-    justifyContent: "center",
-    alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.8,
-    shadowRadius: 2,
-    elevation: 1,
-    // borderWidth:0.5,
-  },
-  buttonText:{
-    fontSize: 18,
-    color: Theme.Theme.color,
-    fontWeight: "bold",
-  },
-  searchText: {
-    fontSize: 18,
-    color: Theme.Theme.color,
-    alignItems: "center",
-    marginLeft: 10,
-    fontWeight: "bold",
-    marginTop: 12.5,
-  },
-  container: {
-    backgroundColor: Theme.Theme.background,
-    flex: 1,
-  },
-  storage: {
-    backgroundColor: "white ",
-  },
-  box: {
-    width: "47%",
-    height: 200,
-    marginHorizontal: 4,
-    marginVertical: 10,
-    padding: 10,
-    borderRadius: 10,
-    justifyContent: "center",
-    alignItems: "center",
-    shadowColor: "#000",
-  },
-  text: {
-    fontSize: widthPercentageToDP('15%'),
-    fontWeight: "bold",
-    color: Theme.Theme.color,
-    // marginBottom:5,
-  },
-  input: {
-    height: 50,
-    backgroundColor: Theme.Theme.background,
-    marginBottom: 15,
-    borderRadius: 10,
-    width: '50%',
-    paddingHorizontal: 15,
-    color: '#fff',
-    borderColor: Theme.Theme.contrast,
-    borderWidth: 1,
-  },
-})
-
-
-const Search = () => {
-  const [p, setp] = useState(true)
-  setTimeout(() => {
-    setp(false)
-  }, 5000)
-  if (p) {
-    return <Loader size={65} color={Theme.COLORS[0]} />
-  }
-  return <Text style={styles.text}>NO RECORD FOUND</Text>
-}
-
 
 const DATA = [
   {

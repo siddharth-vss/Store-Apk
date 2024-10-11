@@ -4,9 +4,75 @@ import { ScrollView } from 'react-native'
 import { Card, Loader } from '../components'
 import { Image } from 'react-native'
 import { heightPercentageToDP, widthPercentageToDP } from 'react-native-responsive-screen'
-import { Interface, SP, Theme } from '../utils'
+import { Interface, SP, Theme ,CSS } from '../utils'
 
 const Shop = () => {
+
+  const Themes = Theme.Style();
+  const Css = CSS.Styles();
+  const styles = StyleSheet.create({
+    title:{
+      fontSize: 24,
+      fontWeight: 'bold',
+      color: Themes.color,
+      marginBottom: 20,
+      marginLeft: 10,
+    },
+    card: {
+      width: '100%',
+      height: '100%',
+      flexDirection: 'row',
+      justifyContent: 'space-around',
+      paddingVertical: 20,
+    },
+    image: {
+      width: 120,
+      height: 120,
+      borderRadius: 60,
+      borderWidth: 2,
+      borderColor: '#007bff',
+    },
+    infoContainer: {
+      marginTop: 20,
+      alignItems: 'center',
+    },
+    name: {
+      fontSize: 20,
+      fontWeight: 'bold',
+      color: "#FFF",
+    },
+    role: {
+      fontSize: 16,
+      color: "#FFF",
+      marginTop: 5,
+      overflow: 'scroll',
+    },
+    mail: {
+      fontSize: 16,
+      color: "#FFF",
+      marginTop: 5,
+      overflow: 'scroll',
+      width: widthPercentageToDP('60%')
+    },
+    idNumber: {
+      fontSize: 14,
+      color: "#FFF",
+  
+      marginTop: 10,
+    },
+    footer: {
+      position: 'absolute',
+      bottom: 20,
+      alignItems: 'center',
+    },
+    footerText: {
+      position: "absolute",
+      transform: '-50%',
+      fontSize: 14,
+      color: "#FFF",
+    },
+  })
+
   const [users, setusers] = useState([])
 
   const get = async () => {
@@ -31,7 +97,7 @@ const Shop = () => {
  
 
   return (
-    <View  style={[styles.container]}>
+    <View  style={[Css.container]}>
 
       <Text style={[styles.title]}>Admin:</Text>
       <ScrollView style={{ height: heightPercentageToDP('15%') }} horizontal={true}>
@@ -107,69 +173,3 @@ const Shop = () => {
 
 export default Shop
 
-const styles = StyleSheet.create({
-  title:{
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: Theme.Theme.color,
-    marginBottom: 20,
-    marginLeft: 10,
-  },
-  container: {
-    backgroundColor: Theme.Theme.background,
-    flex : 1,
-  },
-  card: {
-    width: '100%',
-    height: '100%',
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    paddingVertical: 20,
-  },
-  image: {
-    width: 120,
-    height: 120,
-    borderRadius: 60,
-    borderWidth: 2,
-    borderColor: '#007bff',
-  },
-  infoContainer: {
-    marginTop: 20,
-    alignItems: 'center',
-  },
-  name: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: "#FFF",
-  },
-  role: {
-    fontSize: 16,
-    color: "#FFF",
-    marginTop: 5,
-    overflow: 'scroll',
-  },
-  mail: {
-    fontSize: 16,
-    color: "#FFF",
-    marginTop: 5,
-    overflow: 'scroll',
-    width: widthPercentageToDP('60%')
-  },
-  idNumber: {
-    fontSize: 14,
-    color: "#FFF",
-
-    marginTop: 10,
-  },
-  footer: {
-    position: 'absolute',
-    bottom: 20,
-    alignItems: 'center',
-  },
-  footerText: {
-    position: "absolute",
-    transform: '-50%',
-    fontSize: 14,
-    color: "#FFF",
-  },
-})
