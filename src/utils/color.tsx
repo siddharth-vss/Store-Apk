@@ -1,5 +1,6 @@
-import {StyleSheet} from 'react-native';
-
+import { useEffect, useState } from 'react';
+import {Appearance, StyleSheet, useColorScheme} from 'react-native';
+import { View } from 'react-native'
 export const Grediants = [
   {0: '#48A2F1', 1: '#1B74E8'},
   {0: '#65BA69', 1: '#44A148'},
@@ -25,6 +26,12 @@ export const options = { // for drawer header
   },
 };
 
+export interface ThemeType{
+  background: string;
+  color: string;
+  card: string;
+  contrast: string;
+}
 
 const Light = {
   background: '#F4F5FA',
@@ -40,6 +47,29 @@ const Dark = {
   contrast :'#D5D1EA',
   // card:"#312D4B",
 };
+
+
+export const Style = ()=>{
+  const [theme, setTheme] = useState(Appearance.getColorScheme());
+
+  useEffect(() => {
+    const handleThemeChange = (preferences : any) => {
+      setTheme(preferences.colorScheme);
+    };
+
+    const subscription = Appearance.addChangeListener(handleThemeChange);
+
+    return () => subscription.remove();
+  }, []);
+
+
+
+  // const isDarkMode = useColorScheme() === 'dark';
+  const isDarkMode = theme === 'dark';
+
+  return isDarkMode ? Dark:Light;
+}
+
 
 export const Theme = dark ? Dark : Light;
 export const COLORS = [
