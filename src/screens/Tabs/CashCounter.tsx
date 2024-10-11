@@ -7,6 +7,8 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import { Theme } from '../../utils';
 
 const CashCounter = () => {
+    const Themes = Theme.Style();
+
     /**
      * invoice
      * reacords
@@ -18,14 +20,14 @@ const CashCounter = () => {
             name: 'Invoice',
             options:{...Theme.options},
             component: Invoice,
-            icon : <FontAwesome6 color={Theme.Theme.color} size={24} name="file-invoice-dollar" />
+            icon : <FontAwesome6 color={Themes.color} size={24} name="file-invoice-dollar" />
         },
         {
             label: 'Records',
             options:{...Theme.options},
             name: 'Records',
             component: Records,
-            icon :<MaterialCommunityIcons color={Theme.Theme.color} size={24} name="book-edit-outline" />
+            icon :<MaterialCommunityIcons color={Themes.color} size={24} name="book-edit-outline" />
         },
 
     ]

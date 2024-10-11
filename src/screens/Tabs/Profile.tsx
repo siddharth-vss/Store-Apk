@@ -7,6 +7,8 @@ import Login from '../../menu/Login'
 import { Theme } from '../../utils'
 
 const Profile = () => {
+    const Themes = Theme.Style();
+
     /**
      * 
      */
@@ -16,7 +18,7 @@ const Profile = () => {
             name:  'Profile_',
             component: Profiles,
             options:{...Theme.options,title:"Profile"},
-            icon : <Ionicons color={Theme.Theme.color} name='person' size={24}   />,
+            icon : <Ionicons color={Themes.color} name='person' size={24}   />,
         }, 
         // {
         //     label:'Login',

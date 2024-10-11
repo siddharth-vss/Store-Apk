@@ -7,6 +7,8 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 // import Ionicons from 'react-native-vector-icons/Ionicons'
 import { Theme } from '../../utils';
 const Store = () => {
+    const Themes = Theme.Style();
+
     /**
      * dashboard
      * users
@@ -33,21 +35,21 @@ const Store = () => {
             name:  'Store',
             component: Shop ,
             options:{...Theme.options},
-            icon : <FontAwesome6 color={Theme.Theme.color} name="shop" size={24} />
+            icon : <FontAwesome6 color={Themes.color} name="shop" size={24} />
         },
         {
             label: 'Invoice',
             name: 'Invoice',
             options:{...Theme.options},
             component: Invoice,
-            icon : <FontAwesome6 color={Theme.Theme.color} size={24} name="file-invoice-dollar" />
+            icon : <FontAwesome6 color={Themes.color} size={24} name="file-invoice-dollar" />
         },
         {
             label: 'Records',
             name: 'Records',
             component: Records,
             options:{...Theme.options},
-            icon :<MaterialCommunityIcons color={Theme.Theme.color} size={24} name="book-edit-outline" />
+            icon :<MaterialCommunityIcons color={Themes.color} size={24} name="book-edit-outline" />
         },
         // {
         //     label: 'Profile',

@@ -8,6 +8,9 @@ import { Theme } from '../../utils';
 
 
 const Yard = () => {
+
+    const Themes = Theme.Style();
+    
     /**
      * 
      */
@@ -17,14 +20,14 @@ const Yard = () => {
             name: 'Storage',
             component: Storage,
             options:{...Theme.options},
-            icon: <FontAwesome6 color={Theme.Theme.color} name="boxes-stacked" size={20} />,
+            icon: <FontAwesome6 color={Themes.color} name="boxes-stacked" size={20} />,
         },
         {
             label: 'Items',
             name: 'Items',
             component: Items,
             options:{...Theme.options},
-            icon: <FontAwesome6 color={Theme.Theme.color} name="boxes-stacked" size={20} />,
+            icon: <FontAwesome6 color={Themes.color} name="boxes-stacked" size={20} />,
         },
     ]
     return (
