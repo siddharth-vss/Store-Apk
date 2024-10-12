@@ -23,7 +23,7 @@ const TouchCard: React.FC<ParentProps> = ({
     h,
     colors,
     style,
-    handlePress,
+    handlePress ,
 }) => {
 
     return (

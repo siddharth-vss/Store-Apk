@@ -1,7 +1,8 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React, { useState } from 'react'
-import { Theme,CSS } from '../utils'
+import { Theme, CSS } from '../utils'
 import { TextInput } from 'react-native-gesture-handler';
+import { TouchableOpacity } from 'react-native';
 
 
 
@@ -22,7 +23,7 @@ const Invoice = () => {
       borderRadius: 10,
       marginVertical: 20,
     },
-    
+
     input: {
       height: 50,
       width: '50%',
@@ -35,12 +36,12 @@ const Invoice = () => {
       // color:"#FFF",
       backgroundColor: Themes.background,
     },
-    
+
     txt: {
       color: Themes.color,
       fontWeight: 'bold',
       fontSize: 20,
-      marginVertical :10,
+      marginVertical: 10,
     },
 
   })
@@ -75,6 +76,11 @@ const Invoice = () => {
             onChangeText={setBar}
             keyboardType="number-pad"
           />
+        </View>
+        <View style={Css.row} >
+          <TouchableOpacity style={Css.button} >
+            <Text style={Css.buttonText} > Add</Text>
+          </TouchableOpacity>
         </View>
       </View>
     </View>
