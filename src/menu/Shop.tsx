@@ -4,14 +4,14 @@ import { ScrollView } from 'react-native'
 import { Card, Loader } from '../components'
 import { Image } from 'react-native'
 import { heightPercentageToDP, widthPercentageToDP } from 'react-native-responsive-screen'
-import { Interface, SP, Theme ,CSS } from '../utils'
+import { Interface, SP, Theme, CSS } from '../utils'
 
 const Shop = () => {
 
   const Themes = Theme.Style();
   const Css = CSS.Styles();
   const styles = StyleSheet.create({
-    title:{
+    title: {
       fontSize: 24,
       fontWeight: 'bold',
       color: Themes.color,
@@ -57,7 +57,7 @@ const Shop = () => {
     idNumber: {
       fontSize: 14,
       color: "#FFF",
-  
+
       marginTop: 10,
     },
     footer: {
@@ -94,78 +94,111 @@ const Shop = () => {
     return groups;
   }, {});
 
- 
+
 
   return (
-    <View  style={[Css.container]}>
+    <View style={[Css.container]}>
+      <ScrollView>
 
-      <Text style={[styles.title]}>Admin:</Text>
-      <ScrollView style={{ height: heightPercentageToDP('15%') }} horizontal={true}>
-      {(data?.admin?.length < 1 && users?.length < 1) && <Loader size={65} color={Theme.COLORS[0]} />}
-        
-        {data?.admin?.map((item: Interface.User) => (
-          // {users.map((item: Interface.User) => (
+        <Text style={[styles.title]}>Admin:</Text>
+        <ScrollView horizontal={true}>
+          {(data?.admin?.length < 1 && users?.length < 1) && <Loader size={65} color={Theme.COLORS[0]} />}
+
+          {data?.admin?.map((item: Interface.User) => (
+            // {users.map((item: Interface.User) => (
             <Card key={item._id} colorCode={Math.floor(Math.random() * (3 + 1))} height={'30%'} width={'100%'} >
-            <View style={styles.card}>
-              <Image
-                style={styles.image}
-                source={{
-                  uri: item.pic, // Replace with actual image URL
-                }}
+              <View style={styles.card}>
+                <Image
+                  style={styles.image}
+                  source={{
+                    uri: item.pic, // Replace with actual image URL
+                  }}
                 />
-              <View>
-                <View style={styles.infoContainer}>
-                  <Text style={styles.name}>{item.name}</Text>
-                  <Text style={styles.role}>{item.role}</Text>
-                  <Text style={styles.idNumber}>ID: {item._id}</Text>
-                  <Text style={styles.idNumber}>Ph:+91 {item.mobile}</Text>
+                <View>
+                  <View style={styles.infoContainer}>
+                    <Text style={styles.name}>{item.name}</Text>
+                    <Text style={styles.role}>{item.role}</Text>
+                    <Text style={styles.idNumber}>ID: {item._id}</Text>
+                    <Text style={styles.idNumber}>Ph:+91 {item.mobile}</Text>
+                  </View>
+
+                  {/* Footer */}
+
+                  <View style={styles.footer}>
+                    {/* <Text style={styles.footerText}>Company Name</Text> */}
+                    <Text style={styles.footerText}>email : {item.email}</Text>
+                  </View>
+
                 </View>
-
-                {/* Footer */}
-
-                <View style={styles.footer}>
-                  {/* <Text style={styles.footerText}>Company Name</Text> */}
-                  <Text style={styles.footerText}>email : {item.email}</Text>
-                </View>
-
               </View>
-            </View>
-          </Card>
-        ))}
-      </ScrollView>
+            </Card>
+          ))}
+        </ScrollView>
 
-      <Text style={[styles.title]} >Users:</Text>
-      <ScrollView horizontal={true}>
-        {(data?.user?.length < 1 && users?.length < 1) && <Loader size={65} color={Theme.COLORS[0]} />}
-        {data?.user?.map((item: Interface.User) => (
-          // {users.map((item: Interface.User) => (
+        <Text style={[styles.title]} >Managers:</Text>
+        <ScrollView horizontal={true}>
+          {(data?.manager?.length < 1 && users?.length < 1) && <Loader size={65} color={Theme.COLORS[0]} />}
+          {data?.manager?.map((item: Interface.User) => (
+            // {users.map((item: Interface.User) => (
             <Card key={item._id} colorCode={Math.floor(Math.random() * (3 + 1))} height={'30%'} width={'100%'} >
-            <View style={styles.card}>
-              <Image
-                style={styles.image}
-                source={{
-                  uri: item.pic, // Replace with actual image URL
-                }}
-              />
-              <View>
-                <View style={styles.infoContainer}>
-                  <Text style={styles.name}>{item.name}</Text>
-                  <Text style={styles.role}>{item.role}</Text>
-                  <Text style={styles.idNumber}>ID: {item._id}</Text>
-                  <Text style={styles.idNumber}>Ph:+91 {item.mobile}</Text>
+              <View style={styles.card}>
+                <Image
+                  style={styles.image}
+                  source={{
+                    uri: item.pic, // Replace with actual image URL
+                  }}
+                />
+                <View>
+                  <View style={styles.infoContainer}>
+                    <Text style={styles.name}>{item.name}</Text>
+                    <Text style={styles.role}>{item.role}</Text>
+                    <Text style={styles.idNumber}>ID: {item._id}</Text>
+                    <Text style={styles.idNumber}>Ph:+91 {item.mobile}</Text>
+                  </View>
+
+                  {/* Footer */}
+
+                  <View style={styles.footer}>
+                    {/* <Text style={styles.footerText}>Company Name</Text> */}
+                    <Text style={styles.footerText}>email : {item.email}</Text>
+                  </View>
+
                 </View>
-
-                {/* Footer */}
-
-                <View style={styles.footer}>
-                  {/* <Text style={styles.footerText}>Company Name</Text> */}
-                  <Text style={styles.footerText}>email : {item.email}</Text>
-                </View>
-
               </View>
-            </View>
-          </Card>
-        ))}
+            </Card>
+          ))}
+        </ScrollView>
+        <Text style={[styles.title]} >Users:</Text>
+        <ScrollView horizontal={true}>
+          {(data?.user?.length < 1 && users?.length < 1) && <Loader size={65} color={Theme.COLORS[0]} />}
+          {data?.user?.map((item: Interface.User) => (
+            // {users.map((item: Interface.User) => (
+            <Card key={item._id} colorCode={Math.floor(Math.random() * (3 + 1))} height={'30%'} width={'100%'} >
+              <View style={styles.card}>
+                <Image
+                  style={styles.image}
+                  source={{
+                    uri: item.pic, // Replace with actual image URL
+                  }}
+                />
+                <View>
+                  <View style={styles.infoContainer}>
+                    <Text style={styles.name}>{item.name}</Text>
+                    <Text style={styles.role}>{item.role}</Text>
+                    <Text style={styles.idNumber}>ID: {item._id}</Text>
+                    <Text style={styles.idNumber}>Ph:+91 {item.mobile}</Text>
+                  </View>
+
+
+                  <View style={styles.footer}>
+                    <Text style={styles.footerText}>email : {item.email}</Text>
+                  </View>
+
+                </View>
+              </View>
+            </Card>
+          ))}
+        </ScrollView>
       </ScrollView>
     </View>
   )
