@@ -27,7 +27,6 @@ const Dashboard = ({ navigation }: { navigation: NavigationProp<any> }) => {
             shadowColor: "rgb(46 38 61 / 0.2)",
             shadowOpacity: 1,
             shadowRadius: 10,
-            elevation: 15,
             paddingVertical: 10,
         }
     

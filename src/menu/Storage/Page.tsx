@@ -13,24 +13,8 @@ const Storage = ({ navigation }: { navigation: NavigationProp<any> }) => {
   const styles = StyleSheet.create({
 
 
-    button: {
-      backgroundColor: Theme.COLORS[0],
-      paddingVertical: 10,
-      paddingHorizontal: 20,
-      borderRadius: 10,
-      justifyContent: "center",
-      alignItems: "center",
-      shadowColor: "#000",
-      shadowOffset: { width: 0, height: 2 },
-      shadowOpacity: 0.8,
-      shadowRadius: 2,
-      elevation: 1,
-    },
-    buttonText: {
-      fontSize: 18,
-      color: Themes.color,
-      fontWeight: "bold",
-    },
+    
+    
     searchText: {
       fontSize: 18,
       color: Themes.color,
@@ -161,8 +145,8 @@ const Storage = ({ navigation }: { navigation: NavigationProp<any> }) => {
           </View>
         </View>
         <View style={Css.row}>
-          <TouchableOpacity style={styles.button} onPress={clear}>
-            <Text style={styles.buttonText} >Clear</Text>
+          <TouchableOpacity style={Css.button} onPress={clear}>
+            <Text style={Css.buttonText} >Clear</Text>
           </TouchableOpacity>
         </View>
       </View>

@@ -23,6 +23,24 @@ export const Styles = () => {
             shadowColor: '#000',
             shadowOffset: { width: 0, height: 2 },
           },
+          button: {
+            backgroundColor: Theme.COLORS[0],
+            paddingVertical: 10,
+            paddingHorizontal: 20,
+            borderRadius: 10,
+            justifyContent: "center",
+            alignItems: "center",
+            shadowColor: "#000",
+            shadowOffset: { width: 0, height: 2 },
+            shadowOpacity: 0.8,
+            shadowRadius: 2,
+            elevation: 1,
+          },
+          buttonText: {
+            fontSize: 18,
+            color: Themes.color,
+            fontWeight: "bold",
+          },
     });
     return style;
 }
