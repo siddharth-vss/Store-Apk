@@ -4,3 +4,4 @@ const Users = async ()=>{
     const data = await SP.get('/user');
     return data.data;
 } 
+
