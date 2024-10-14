@@ -1,8 +1,10 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React, { useState } from 'react'
-import { Theme, CSS } from '../utils'
+import { Alert, StyleSheet, Text, View } from 'react-native'
+import React, { useMemo, useState } from 'react'
+import { Theme, CSS, Interface } from '../utils'
 import { TextInput } from 'react-native-gesture-handler';
 import { TouchableOpacity } from 'react-native';
+import { ItemServices } from '../Services';
+import { ScrollView } from 'react-native';
 
 
 
@@ -11,6 +13,15 @@ const Invoice = () => {
   const Css = CSS.Styles();
 
   const [Bar, setBar] = useState('')
+  const [Quantity, setQuantity] = useState('')
+  const [Itemname, setItemname] = useState<string | null>(null)
+  const [Items, setItems] = useState<Interface.Item[] | null>(null)
+  const [InvoiceItems, setInvoiceItems] = useState<string[]>()
+  const [InvoicePrice, setInvoicePrice] = useState<number[]>()
+  const [Total, setTotal] = useState(0)
+
+  const [InvoiceQuantity, setInvoiceQuantity] = useState<number[]>()
+
 
   const styles = StyleSheet.create({
     text: {
@@ -46,6 +57,58 @@ const Invoice = () => {
 
   })
 
+
+  const getData = async () => {
+    const data = await ItemServices.Items();
+    setItems(data);
+  }
+  const barfinder = (e: string) => Items?.filter((f: Interface.Item) => f.bar == Number.parseInt(e));
+  const namefinder = (e: string) => Items?.filter((f: Interface.Item) => f._id == e);
+
+  const Barhandel = (e: string) => {
+    setBar(e);
+    const item = barfinder(e);
+
+    if (item && item.length > 0) {
+      setItemname(item[0].name);
+    } else {
+      setItemname("");
+    }
+  }
+
+
+  const handleSubmit = () => {
+    const item = barfinder(Bar);
+    if (item && InvoiceQuantity && InvoiceItems?.includes(item[0]._id)) {
+      const index = InvoiceItems.indexOf(item[0]._id)
+
+      const newQuantity = InvoiceQuantity?.map((e: any, i: number) => {
+
+        if (i === index) {
+          return e + Number(Quantity)
+        }
+        return e;
+      })
+      setInvoiceQuantity(newQuantity)
+      // setInvoiceQuantity(prevItems => prevItems ? [...prevItems, Number(Quantity)] : [Number(Quantity)]);
+      setTotal(Total + (item[0].price * Number(Quantity)));
+      setItemname(''); setBar(''); setQuantity('');
+      // console.log(InvoiceQuantity?.map((e: any, i: number) => e === item[0]._id? {...e, quantity: e.quantity + Number(Quantity)} : e))
+    }
+    else if (item && item.length > 0) {
+      setInvoiceItems(prevItems => prevItems ? [...prevItems, item[0]._id] : [item[0]._id]);
+      setInvoicePrice(prevItems => prevItems ? [...prevItems, item[0].price] : [item[0].price]);
+      setInvoiceQuantity(prevItems => prevItems ? [...prevItems, Number(Quantity)] : [Number(Quantity)]);
+      setItemname(''); setBar(''); setQuantity('');
+      setTotal(Total + (item[0].price * Number(Quantity)));
+    }
+    else {
+      Alert.alert('Item not found!');
+    }
+  };
+
+
+  useMemo(() => getData(), []);
   return (
     <View style={[Css.container]} >
       {/* <Text style={styles.text} >Invoice</Text> */}
@@ -57,10 +120,10 @@ const Invoice = () => {
             // autoCapitalize='characters'
             style={styles.input}
             placeholder="Bar number"
-            cursorColor={'#FFF'}
-            placeholderTextColor={Themes.color}
+            cursorColor={Themes.color}
+            placeholderTextColor={'grey'}
             value={Bar}
-            onChangeText={setBar}
+            onChangeText={(e) => { Barhandel(e) }}
             keyboardType="number-pad"
           />
         </View>
@@ -70,22 +133,91 @@ const Invoice = () => {
             // autoCapitalize='characters'
             style={styles.input}
             placeholder="Quantity"
-            cursorColor={'#FFF'}
-            placeholderTextColor={Themes.color}
-            value={Bar}
-            onChangeText={setBar}
+            cursorColor={Themes.color}
+            placeholderTextColor={'grey'}
+            value={Quantity}
+            onChangeText={setQuantity}
             keyboardType="number-pad"
           />
         </View>
         <View style={Css.row} >
-          <TouchableOpacity style={Css.button} >
+          <Text style={styles.txt} >Item :</Text>
+          <TextInput
+            // autoCapitalize='characters'
+            style={styles.input}
+            placeholder="Item"
+            cursorColor={Themes.color}
+            placeholderTextColor={'grey'}
+            value={Itemname ?? ''}
+            onChangeText={setItemname}
+            keyboardType="number-pad"
+          />
+        </View>
+        <View style={Css.row} >
+          <TouchableOpacity onPress={handleSubmit} style={Css.button} >
             <Text style={Css.buttonText} > Add</Text>
           </TouchableOpacity>
         </View>
       </View>
+
+      <ScrollView>
+        <View style={table.tableHeader}>
+          <Text style={table.headerText}>Item</Text>
+          <Text style={table.headerText}>Price</Text>
+          <Text style={table.headerText}>Quantity</Text>
+          <Text style={table.headerText}>Total</Text>
+        </View>
+        {InvoiceItems?.map((row: any, i: number) => {
+
+
+          const item = namefinder(InvoiceItems[i]);
+          if (InvoiceQuantity && InvoicePrice && item && InvoiceQuantity[i] > 0) {
+
+
+            return <View key={i} style={table.tableRow}>
+              <Text style={table.rowText}>{item[0].name}</Text>
+              <Text style={table.rowText}>{InvoicePrice[i]}</Text>
+              <Text style={table.rowText}>{InvoiceQuantity[i]}</Text>
+              <Text style={table.rowText}>{InvoicePrice[i] * InvoiceQuantity[i]}</Text>
+            </View>
+          }
+        })}
+        <View style={table.tableRow}>
+          <Text style={table.rowText}></Text>
+          <Text style={table.rowText}></Text>
+          <Text style={table.headerText}>Total</Text>
+          <Text style={table.rowText}>{Total}</Text>
+        </View>
+      </ScrollView>
+
+
     </View>
   )
 }
 
 export default Invoice
 
+const table = StyleSheet.create({
+  tableHeader: {
+    flexDirection: 'row',
+    backgroundColor: '#f0f0f0',
+    padding: 10,
+    borderBottomWidth: 1,
+    borderColor: '#ddd',
+  },
+  headerText: {
+    flex: 1,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  tableRow: {
+    flexDirection: 'row',
+    padding: 10,
+    borderBottomWidth: 1,
+    borderColor: '#ddd',
+  },
+  rowText: {
+    flex: 1,
+    textAlign: 'center',
+  },
+});
