@@ -41,5 +41,19 @@ export interface Item extends mongo{
   quantity : number ;
   storage : storage ;
   shop : Shop ;
+  bar:number;
 }
 
+export interface Invoice  {
+  user : string ,
+  items: string[],
+  quantity: number[],
+  price: number[],
+  discount: number,
+  tax: number,
+  subtotal: number,
+  totalDiscount: number,
+  total: number,
+  status: string,
+  shop: string,
+}

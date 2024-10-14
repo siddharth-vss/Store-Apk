@@ -5,3 +5,6 @@ const Users = async ()=>{
     return data.data;
 } 
 
+export const UserServices = {
+    Users,
+}

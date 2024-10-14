@@ -4,3 +4,8 @@ const Shops = async ()=>{
     const data = await SP.get('/shop');
     return data.data;
 } 
+
+
+export const ShopServices = {
+    Shops,
+}
