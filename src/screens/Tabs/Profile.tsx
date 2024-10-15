@@ -19,12 +19,7 @@ const Profile = () => {
             component: Profiles,
             options:{...Theme.options,title:"Profile"},
             icon : <Ionicons color={Themes.color} name='person' size={24}   />,
-        }, 
-        // {
-        //     label:'Login',
-        //     name: 'Login',
-        //     component: Login,
-        // },
+        },         
         // {
         //     label:'',
         //     name: '',

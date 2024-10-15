@@ -1,27 +1,46 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
+import { UserServices } from '../Services';
 
+import useAuthStore from '../store/Authstore';
+import { NavigationProp } from '@react-navigation/native';
 
-const Login = () => {
+const Login = ({ navigation }: { navigation: NavigationProp<any> }) => {
   const [isLogin, setIsLogin] = useState(true); // Toggle between login and register
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
-  const handleAuthAction = () => {
-    if (isLogin) {
-      // Perform login validation and action here
-      Alert.alert('Login Successful', `Welcome ${email}`);
-    } else {
-      // Perform registration validation
-      if (password !== confirmPassword) {
-        Alert.alert('Error', 'Passwords do not match!');
-        return;
-      }
-      Alert.alert('Registration Successful', `Welcome ${email}`);
+  const { token, user, setUser } = useAuthStore();
+
+  const handleAuthAction = async () => {
+
+    const Data = await UserServices.Login({ text: email, password: password });
+    if (Data.dat) {
+      setUser(Data.dat);
+      navigation.navigate("Home");
+      Alert.alert('Login Successful', `Welcome ${Data.dat.name}`);
     }
+    // if (isLogin) {
+    //   // Perform login validation and action here
+    // } else {
+    //   // Perform registration validation
+    //   if (password !== confirmPassword) {
+    //     Alert.alert('Error', 'Passwords do not match!');
+    // return;
+    // }
+    // Alert.alert('Registration Successful', `Welcome ${email}`);
+    // }
   };
+
+  useEffect(() => {
+    if (user._id.length > 0) {
+      navigation.navigate("Home");
+    } else {
+      navigation.navigate("Login");
+    }
+  }, [user])
   return (
     <LinearGradient colors={['#6a11cb', '#2575fc']} style={styles.container}>
       <View style={styles.formContainer}>

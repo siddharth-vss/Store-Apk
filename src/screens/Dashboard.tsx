@@ -4,12 +4,28 @@ import { Card, GridBox, Topbg, TouchCard } from '../components'
 import { NavigationProp } from '@react-navigation/native'
 import { heightPercentageToDP } from 'react-native-responsive-screen'
 import { CSS, Theme } from '../utils'
+import useAuthStore from '../store/Authstore'
 
 const Dashboard = ({ navigation }: { navigation: NavigationProp<any> }) => {
 
+
+    const { token, user, setUser } = useAuthStore();
+
+    const navigate = (path = 'Test') => {
+        navigation.navigate(path);
+    }
+
+    useEffect(() => {
+        if (user._id.length == 0) {
+            navigate("Login");
+        }
+    }, [user])
+
+
+
     const Themes = Theme.Style();
     const Css = CSS.Styles();
-    const styles = StyleSheet.create({    
+    const styles = StyleSheet.create({
         card: {
             flexDirection: 'row',
             justifyContent: 'center',
@@ -29,12 +45,10 @@ const Dashboard = ({ navigation }: { navigation: NavigationProp<any> }) => {
             shadowRadius: 10,
             paddingVertical: 10,
         }
-    
+
     })
 
-    const navigate = (path = 'Test') => {
-        navigation.navigate(path);
-    }
+
 
     const data = [
         { name: "Profile", path: "Profile" },
@@ -42,10 +56,15 @@ const Dashboard = ({ navigation }: { navigation: NavigationProp<any> }) => {
         { name: "Storage", path: "Yard" },
         { name: "Invoice", path: "CashCounter" },
     ]
+
+
+
+
+
     //  random colorCode picker ->> Math.floor(Math.random() * (8 + 1))
     return (
         <View style={[Css.container]}>
-            <View style={{ height: heightPercentageToDP('30%')  }} >
+            <View style={{ height: heightPercentageToDP('30%') }} >
                 <Topbg />
             </View>
             <GridBox>
