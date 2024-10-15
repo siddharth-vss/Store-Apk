@@ -26,6 +26,7 @@ import { CashCounter, Profile, Store, Yard, } from './src/screens/Tabs';
 
 import SystemNavigationBar from 'react-native-system-navigation-bar';
 import { Stacks } from './src/Navigation';
+import Login from './src/menu/Login'
 
 
 const Stack = createNativeStackNavigator();
@@ -61,6 +62,11 @@ function App(): React.JSX.Element {
       component: Dashboard
     },
     {
+      name: "Login",
+      options: { headerShown: false },
+      component: Login
+    },
+    {
       name: "CashCounter",
       options: { headerShown: false },
       component: CashCounter
@@ -89,9 +95,9 @@ function App(): React.JSX.Element {
 
 
   // useEffect(() => {
-    setInterval(() => {
-      setSplash(false);
-    }, 8000)
+  setInterval(() => {
+    setSplash(false);
+  }, 8000)
   // }, [])
 
 
@@ -102,9 +108,9 @@ function App(): React.JSX.Element {
   }
 
   return (
-    <NavigationContainer>
-      <Stacks screens={Data} />
-    </NavigationContainer>
+      <NavigationContainer>
+        <Stacks screens={Data} />
+      </NavigationContainer>
   );
 }
 

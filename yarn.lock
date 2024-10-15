@@ -1152,6 +1152,13 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
+"@react-native-async-storage/async-storage@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.npmjs.org/@react-native-async-storage/async-storage/-/async-storage-2.0.0.tgz"
+  integrity sha512-af6H9JjfL6G/PktBfUivvexoiFKQTJGQCtSWxMdivLzNIY94mu9DdiY0JqCSg/LyPCLGKhHPUlRQhNvpu3/KVA==
+  dependencies:
+    merge-options "^3.0.4"
+
 "@react-native-community/cli-clean@14.1.0":
   version "14.1.0"
   dependencies:
@@ -1592,7 +1599,7 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react@*", "@types/react@^18.2.6":
+"@types/react@*", "@types/react@^18.2.6", "@types/react@>=18.0.0":
   version "18.3.8"
   dependencies:
     "@types/prop-types" "*"
@@ -3195,6 +3202,11 @@ is-number@^7.0.0:
 is-path-inside@^3.0.3:
   version "3.0.3"
 
+is-plain-obj@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.npmjs.org/is-plain-obj/-/is-plain-obj-2.1.0.tgz"
+  integrity sha512-YWnfyRwxL/+SsrWYfOpUtz5b3YD+nyfkHvjbcanzk8zgyO4ASD67uVMRt8k5bM4lLMDnXfriRhOpemw+NfT1eA==
+
 is-plain-object@^2.0.4:
   version "2.0.4"
   dependencies:
@@ -3815,6 +3827,13 @@ marky@^1.2.2:
 
 memoize-one@^5.0.0:
   version "5.2.1"
+
+merge-options@^3.0.4:
+  version "3.0.4"
+  resolved "https://registry.npmjs.org/merge-options/-/merge-options-3.0.4.tgz"
+  integrity sha512-2Sug1+knBjkaMsMgf1ctR1Ujx+Ayku4EdJN4Z+C2+JzoeF7A3OZ9KM2GY0CpQS51NR61LTurMJrRKPhSs3ZRTQ==
+  dependencies:
+    is-plain-obj "^2.1.0"
 
 merge-stream@^2.0.0:
   version "2.0.0"
@@ -4477,7 +4496,7 @@ react-native-video@^6.6.2:
   resolved "https://registry.npmjs.org/react-native-video/-/react-native-video-6.6.2.tgz"
   integrity sha512-VYh4iZOsmb4nmRWhMCaWOay6TuSv446TcWYhnajvMPBJbB8zM25wwKmJs8hQ4lVqZeYSTIhdfl8yPez/eIyixA==
 
-react-native@*, react-native@>=0.35, react-native@>=0.59, react-native@0.75.3:
+react-native@*, "react-native@^0.0.0-0 || >=0.65 <1.0", react-native@>=0.35, react-native@>=0.59, react-native@0.75.3:
   version "0.75.3"
   dependencies:
     "@jest/create-cache-key-function" "^29.6.3"
@@ -4536,7 +4555,7 @@ react-test-renderer@18.3.1:
     react-shallow-renderer "^16.15.0"
     scheduler "^0.23.2"
 
-react@*, "react@^16.0.0 || ^17.0.0 || ^18.0.0", react@^18.2.0, react@^18.3.1, react@>=16.8, react@>=17.0.0, react@18.3.1:
+react@*, "react@^16.0.0 || ^17.0.0 || ^18.0.0", react@^18.2.0, react@^18.3.1, react@>=16.8, react@>=17.0.0, react@>=18.0.0, react@18.3.1:
   version "18.3.1"
   dependencies:
     loose-envify "^1.1.0"
@@ -5389,3 +5408,8 @@ yargs@^17.3.1, yargs@^17.6.2:
 
 yocto-queue@^0.1.0:
   version "0.1.0"
+
+zustand@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.npmjs.org/zustand/-/zustand-5.0.0.tgz"
+  integrity sha512-LE+VcmbartOPM+auOjCCLQOsQ05zUTp8RkgwRzefUk+2jISdMMFnxvyTjA4YNWr5ZGXYbVsEMZosttuxUBkojQ==
