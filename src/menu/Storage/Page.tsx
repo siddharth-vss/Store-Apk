@@ -69,7 +69,7 @@ const Storage = ({ navigation }: { navigation: NavigationProp<any> }) => {
     if (p) {
       return <Loader size={65} color={Theme.COLORS[0]} />
     }
-    return <Text style={styles.text}>NO RECORD FOUND</Text>
+    return <Text style={[styles.text,{color : Themes.color}]}>NO RECORD FOUND</Text>
   }
   const navigate = (path = 'Test', data: {}) => {
     navigation.navigate(path, { ...data });

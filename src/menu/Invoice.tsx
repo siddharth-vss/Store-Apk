@@ -54,8 +54,35 @@ const Invoice = () => {
       fontSize: 20,
       marginVertical: 10,
     },
-
   })
+    const table = StyleSheet.create({
+      tableHeader: {
+        flexDirection: 'row',
+        backgroundColor: Themes.card,
+        padding: 10,
+        borderBottomWidth: 1,
+        borderColor: '#ddd',
+      },
+      headerText: {
+        flex: 1,
+        color : Themes.color,
+        fontWeight: 'bold',
+        textAlign: 'center',
+      },
+      tableRow: {
+        flexDirection: 'row',
+        padding: 10,
+        borderBottomWidth: 1,
+        borderColor: '#ddd',
+      },
+      rowText: {
+        flex: 1,
+        textAlign: 'center',
+        color : Themes.color,
+      },
+    })
+
+
 
 
   const getData = async () => {
@@ -75,7 +102,6 @@ const Invoice = () => {
       setItemname("");
     }
   }
-
 
   const handleSubmit = () => {
     const item = barfinder(Bar);
@@ -107,8 +133,11 @@ const Invoice = () => {
     }
   };
 
-
   useMemo(() => getData(), []);
+
+
+
+
   return (
     <View style={[Css.container]} >
       {/* <Text style={styles.text} >Invoice</Text> */}
@@ -128,7 +157,7 @@ const Invoice = () => {
           />
         </View>
         <View style={Css.row} >
-          <Text style={styles.txt} >QuantEity :</Text>
+          <Text style={styles.txt} >Quantity :</Text>
           <TextInput
             // autoCapitalize='characters'
             style={styles.input}
@@ -197,27 +226,4 @@ const Invoice = () => {
 
 export default Invoice
 
-const table = StyleSheet.create({
-  tableHeader: {
-    flexDirection: 'row',
-    backgroundColor: '#f0f0f0',
-    padding: 10,
-    borderBottomWidth: 1,
-    borderColor: '#ddd',
-  },
-  headerText: {
-    flex: 1,
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-  tableRow: {
-    flexDirection: 'row',
-    padding: 10,
-    borderBottomWidth: 1,
-    borderColor: '#ddd',
-  },
-  rowText: {
-    flex: 1,
-    textAlign: 'center',
-  },
-});
+
