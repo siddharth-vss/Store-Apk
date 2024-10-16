@@ -22,5 +22,3 @@ const Storage = () => {
 }
 
 export default Storage
-
-const styles = StyleSheet.create({})

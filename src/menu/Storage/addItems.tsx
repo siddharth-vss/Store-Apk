@@ -1,10 +1,9 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { Button, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import { Theme,CSS } from '../utils'
+import { CSS, Theme } from '../../utils';
 
-const Records = () => {
-
-  const Themes = Theme.Style();
+const AddItems = () => {
+  // const Themes = Theme.Style();
   const Css = CSS.Styles();
   // const styles = StyleSheet.create({
   //   text: {
@@ -18,13 +17,13 @@ const Records = () => {
   //     marginVertical: 20,
   //   },
   // })
-
   return (
     <View style={[Css.container]}>
-      <Text style={Css.text_temp} >Records</Text>
+      <Text style={Css.text_temp}>Add Items</Text>
     </View>
   )
 }
 
-export default Records
+export default AddItems
 
+const styles = StyleSheet.create({})

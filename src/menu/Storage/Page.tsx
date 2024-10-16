@@ -11,10 +11,6 @@ const Storage = ({ navigation }: { navigation: NavigationProp<any> }) => {
   const Themes = Theme.Style();
   const Css = CSS.Styles();
   const styles = StyleSheet.create({
-
-
-    
-    
     searchText: {
       fontSize: 18,
       color: Themes.color,
