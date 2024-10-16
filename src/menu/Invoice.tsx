@@ -5,12 +5,98 @@ import { TextInput } from 'react-native-gesture-handler';
 import { TouchableOpacity } from 'react-native';
 import { ItemServices } from '../Services';
 import { ScrollView } from 'react-native';
-
+import RNPrint from 'react-native-print';
 
 
 const Invoice = () => {
   const Themes = Theme.Style();
   const Css = CSS.Styles();
+
+  const printHTML = async () => {
+    try {
+      const htmlContent = `
+      <html>
+        <head>
+          <style>
+            body {
+              font - family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+            .container {
+              width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+            .header {
+              text - align: center;
+            padding: 10px 0;
+            background-color: #007bff;
+            color: #ffffff;
+            border-radius: 10px 10px 0 0;
+        }
+
+            .content {
+              padding: 20px;
+            text-align: center;
+        }
+
+            .otp-code {
+              font - size: 24px;
+            font-weight: bold;
+            margin: 20px 0;
+            color: #007bff;
+        }
+
+            .footer {
+              text - align: center;
+            padding: 10px 0;
+            background-color: #f4f4f4;
+            color: #888888;
+            border-radius: 0 0 10px 10px;
+        }
+
+            .footer a {
+              color: #007bff;
+            text-decoration: none;
+        }
+          </style>
+        </head>
+
+        <body>
+          <div class="container">
+            <div class="header">
+              <h1>Your OTP Code</h1>
+            </div>
+            <div class="content">
+              <p>Hello,{{ reply_to }}</p>
+              <p>Use the following One-Time Password (OTP) to complete your transaction:</p>
+              <p class="otp-code">{{ OTP_CODE }}</p>
+              <p>This OTP is valid for the next 10 minutes.</p>
+              <p>If you did not request this OTP, please ignore this email.</p>
+            </div>
+            <div class="footer">
+              <p>Thank you,<br>Sparrow Tech</p>
+              <p><a href="https://spgaming2056.w3spaces.com/">Visit our website</a></p>
+            </div>
+          </div>
+        </body>
+
+      </html>
+ `;
+
+      await RNPrint.print({ html: htmlContent });
+    } catch (error) {
+      Alert.alert('Error', 'Something went wrong while trying to print the document.');
+    }
+  };
 
   const [Bar, setBar] = useState('')
   const [Quantity, setQuantity] = useState('')
@@ -55,32 +141,32 @@ const Invoice = () => {
       marginVertical: 10,
     },
   })
-    const table = StyleSheet.create({
-      tableHeader: {
-        flexDirection: 'row',
-        backgroundColor: Themes.card,
-        padding: 10,
-        borderBottomWidth: 1,
-        borderColor: '#ddd',
-      },
-      headerText: {
-        flex: 1,
-        color : Themes.color,
-        fontWeight: 'bold',
-        textAlign: 'center',
-      },
-      tableRow: {
-        flexDirection: 'row',
-        padding: 10,
-        borderBottomWidth: 1,
-        borderColor: '#ddd',
-      },
-      rowText: {
-        flex: 1,
-        textAlign: 'center',
-        color : Themes.color,
-      },
-    })
+  const table = StyleSheet.create({
+    tableHeader: {
+      flexDirection: 'row',
+      backgroundColor: Themes.card,
+      padding: 10,
+      borderBottomWidth: 1,
+      borderColor: '#ddd',
+    },
+    headerText: {
+      flex: 1,
+      color: Themes.color,
+      fontWeight: 'bold',
+      textAlign: 'center',
+    },
+    tableRow: {
+      flexDirection: 'row',
+      padding: 10,
+      borderBottomWidth: 1,
+      borderColor: '#ddd',
+    },
+    rowText: {
+      flex: 1,
+      textAlign: 'center',
+      color: Themes.color,
+    },
+  })
 
 
 
@@ -104,6 +190,7 @@ const Invoice = () => {
   }
 
   const handleSubmit = () => {
+    printHTML();
     const item = barfinder(Bar);
     if (item && InvoiceQuantity && InvoiceItems?.includes(item[0]._id)) {
       const index = InvoiceItems.indexOf(item[0]._id)
