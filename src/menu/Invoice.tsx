@@ -6,107 +6,39 @@ import { TouchableOpacity } from 'react-native';
 import { ItemServices } from '../Services';
 import { ScrollView } from 'react-native';
 import RNPrint from 'react-native-print';
+import { InvoiceFile } from '../templates';
 
 
 const Invoice = () => {
   const Themes = Theme.Style();
   const Css = CSS.Styles();
 
-  const printHTML = async () => {
-    try {
-      const htmlContent = `
-      <html>
-        <head>
-          <style>
-            body {
-              font - family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-        }
-
-            .container {
-              width: 100%;
-            max-width: 600px;
-            margin: 0 auto;
-            background-color: #ffffff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-            .header {
-              text - align: center;
-            padding: 10px 0;
-            background-color: #007bff;
-            color: #ffffff;
-            border-radius: 10px 10px 0 0;
-        }
-
-            .content {
-              padding: 20px;
-            text-align: center;
-        }
-
-            .otp-code {
-              font - size: 24px;
-            font-weight: bold;
-            margin: 20px 0;
-            color: #007bff;
-        }
-
-            .footer {
-              text - align: center;
-            padding: 10px 0;
-            background-color: #f4f4f4;
-            color: #888888;
-            border-radius: 0 0 10px 10px;
-        }
-
-            .footer a {
-              color: #007bff;
-            text-decoration: none;
-        }
-          </style>
-        </head>
-
-        <body>
-          <div class="container">
-            <div class="header">
-              <h1>Your OTP Code</h1>
-            </div>
-            <div class="content">
-              <p>Hello,{{ reply_to }}</p>
-              <p>Use the following One-Time Password (OTP) to complete your transaction:</p>
-              <p class="otp-code">{{ OTP_CODE }}</p>
-              <p>This OTP is valid for the next 10 minutes.</p>
-              <p>If you did not request this OTP, please ignore this email.</p>
-            </div>
-            <div class="footer">
-              <p>Thank you,<br>Sparrow Tech</p>
-              <p><a href="https://spgaming2056.w3spaces.com/">Visit our website</a></p>
-            </div>
-          </div>
-        </body>
-
-      </html>
- `;
-
-      await RNPrint.print({ html: htmlContent });
-    } catch (error) {
-      Alert.alert('Error', 'Something went wrong while trying to print the document.');
-    }
-  };
+  
 
   const [Bar, setBar] = useState('')
   const [Quantity, setQuantity] = useState('')
   const [Itemname, setItemname] = useState<string | null>(null)
   const [Items, setItems] = useState<Interface.Item[] | null>(null)
   const [InvoiceItems, setInvoiceItems] = useState<string[]>()
-  const [InvoicePrice, setInvoicePrice] = useState<number[]>()
+  // const [InvoicePrice, setInvoicePrice] = useState<number[]>()
   const [Total, setTotal] = useState(0)
 
   const [InvoiceQuantity, setInvoiceQuantity] = useState<number[]>()
+
+
+  const printHTML = async () => {
+    // Alert.prompt("dd");
+    try {
+      const invoice = InvoiceFile({
+        Items: Items ?? [],
+        InvoiceItems: InvoiceItems ?? [],
+        InvoiceQuantity: InvoiceQuantity ?? [],
+      });
+      await RNPrint.print({ html: invoice });
+    } catch (error) {
+      Alert.alert('Error', 'Something went wrong while trying to print the document.');
+    }
+  };
 
 
   const styles = StyleSheet.create({
@@ -176,7 +108,7 @@ const Invoice = () => {
     setItems(data);
   }
   const barfinder = (e: string) => Items?.filter((f: Interface.Item) => f.bar == Number.parseInt(e));
-  const namefinder = (e: string) => Items?.filter((f: Interface.Item) => f._id == e);
+  const itemfinder = (e: string) => Items?.filter((f: Interface.Item) => f._id == e);
 
   const Barhandel = (e: string) => {
     setBar(e);
@@ -190,7 +122,6 @@ const Invoice = () => {
   }
 
   const handleSubmit = () => {
-    printHTML();
     const item = barfinder(Bar);
     if (item && InvoiceQuantity && InvoiceItems?.includes(item[0]._id)) {
       const index = InvoiceItems.indexOf(item[0]._id)
@@ -210,13 +141,13 @@ const Invoice = () => {
     }
     else if (item && item.length > 0) {
       setInvoiceItems(prevItems => prevItems ? [...prevItems, item[0]._id] : [item[0]._id]);
-      setInvoicePrice(prevItems => prevItems ? [...prevItems, item[0].price] : [item[0].price]);
+      // setInvoicePrice(prevItems => prevItems ? [...prevItems, item[0].price] : [item[0].price]);
       setInvoiceQuantity(prevItems => prevItems ? [...prevItems, Number(Quantity)] : [Number(Quantity)]);
       setItemname(''); setBar(''); setQuantity('');
       setTotal(Total + (item[0].price * Number(Quantity)));
     }
     else {
-      Alert.alert('Item not found!');
+      // Alert.alert('Item not found!');
     }
   };
 
@@ -273,6 +204,9 @@ const Invoice = () => {
           <TouchableOpacity onPress={handleSubmit} style={Css.button} >
             <Text style={Css.buttonText} > Add</Text>
           </TouchableOpacity>
+          <TouchableOpacity onPress={printHTML} style={Css.button} >
+            <Text style={Css.buttonText} > Print</Text>
+          </TouchableOpacity>
         </View>
       </View>
 
@@ -286,15 +220,15 @@ const Invoice = () => {
         {InvoiceItems?.map((row: any, i: number) => {
 
 
-          const item = namefinder(InvoiceItems[i]);
-          if (InvoiceQuantity && InvoicePrice && item && InvoiceQuantity[i] > 0) {
+          const item = itemfinder(InvoiceItems[i]);
+          if (InvoiceQuantity && item && InvoiceQuantity[i] > 0) {
 
 
             return <View key={i} style={table.tableRow}>
               <Text style={table.rowText}>{item[0].name}</Text>
-              <Text style={table.rowText}>{InvoicePrice[i]}</Text>
+              <Text style={table.rowText}>{item[0].price}</Text>
               <Text style={table.rowText}>{InvoiceQuantity[i]}</Text>
-              <Text style={table.rowText}>{InvoicePrice[i] * InvoiceQuantity[i]}</Text>
+              <Text style={table.rowText}>{item[0].price * InvoiceQuantity[i]}</Text>
             </View>
           }
         })}
