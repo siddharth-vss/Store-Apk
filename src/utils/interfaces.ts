@@ -12,6 +12,7 @@ export interface User extends mongo {
   mobile: string;
 }
 
+
 export interface Shop extends mongo {
     name : string;
     email: string;
@@ -45,15 +46,16 @@ export interface Item extends mongo{
 }
 
 export interface Invoice  {
-  user : string ,
+  email : string ,
   items: string[],
   quantity: number[],
-  price: number[],
-  discount: number,
-  tax: number,
-  subtotal: number,
-  totalDiscount: number,
+  // price: number[],
+  // discount: number,
+  // tax: number,
+  // subtotal: number,
+  // totalDiscount: number,
   total: number,
-  status: string,
+  status?: string,
+  mode?:string,
   shop: string,
 }

@@ -1,9 +1,9 @@
-import { Alert, StyleSheet, Text, View } from 'react-native'
+import { Alert, Modal, StyleSheet, Text, View } from 'react-native'
 import React, { useMemo, useState } from 'react'
 import { Theme, CSS, Interface } from '../utils'
 import { TextInput } from 'react-native-gesture-handler';
 import { TouchableOpacity } from 'react-native';
-import { ItemServices } from '../Services';
+import { ItemServices, ShopServices } from '../Services';
 import { ScrollView } from 'react-native';
 import RNPrint from 'react-native-print';
 import { InvoiceFile } from '../templates';
@@ -13,7 +13,9 @@ const Invoice = () => {
   const Themes = Theme.Style();
   const Css = CSS.Styles();
 
-  
+  // const [first, setfirst] = useState(second)
+
+
 
   const [Bar, setBar] = useState('')
   const [Quantity, setQuantity] = useState('')
@@ -24,19 +26,45 @@ const Invoice = () => {
   const [Total, setTotal] = useState(0)
 
   const [InvoiceQuantity, setInvoiceQuantity] = useState<number[]>()
+  const [modalVisible, setModalVisible] = useState(false);
+  const [inputValue, setInputValue] = useState('');
+
+
+  const showPrompt = () => {
+    setModalVisible(true);
+  };
+
+  const handleConfirm = () => {
+    console.log('User input:', inputValue);
+    setModalVisible(false);
+    printHTML();
+  };
 
 
   const printHTML = async () => {
-    // Alert.prompt("dd");
-    try {
-      const invoice = InvoiceFile({
-        Items: Items ?? [],
-        InvoiceItems: InvoiceItems ?? [],
-        InvoiceQuantity: InvoiceQuantity ?? [],
+    let invobj;
+    if (inputValue.length > 0) {
+
+      invobj = await ShopServices.CreateInvoice({
+        email: inputValue,
+        items: InvoiceItems ?? [],
+        quantity: InvoiceQuantity ?? [],
+        total: Total,
+        shop: '66f2b588e93de4c964e76b5d'
       });
-      await RNPrint.print({ html: invoice });
-    } catch (error) {
-      Alert.alert('Error', 'Something went wrong while trying to print the document.');
+      // Alert.prompt("dd");
+      try {
+        const invoice = InvoiceFile({
+          Items: Items ?? [],
+          InvoiceItems: InvoiceItems ?? [],
+          InvoiceQuantity: InvoiceQuantity ?? [],
+          data: invobj,
+
+        });
+        await RNPrint.print({ html: invoice });
+      } catch (error) {
+        Alert.alert('Error', 'Something went wrong while trying to print the document.');
+      }
     }
   };
 
@@ -204,7 +232,7 @@ const Invoice = () => {
           <TouchableOpacity onPress={handleSubmit} style={Css.button} >
             <Text style={Css.buttonText} > Add</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={printHTML} style={Css.button} >
+          <TouchableOpacity onPress={showPrompt} style={Css.button} >
             <Text style={Css.buttonText} > Print</Text>
           </TouchableOpacity>
         </View>
@@ -241,6 +269,30 @@ const Invoice = () => {
       </ScrollView>
 
 
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <Modal
+          transparent={true}
+          visible={modalVisible}
+          animationType="slide"
+          onRequestClose={() => setModalVisible(false)}
+        >
+          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0,0,0,0.5)' }}>
+            <View style={{ width: 300, padding: 20, backgroundColor: 'white', borderRadius: 10 }}>
+              <Text style={{ marginBottom: 10 }}>Enter your name:</Text>
+              <TextInput
+                style={{ borderColor: 'gray', borderWidth: 1, marginBottom: 10, padding: 8 }}
+                placeholder="Your name"
+                value={inputValue}
+                onChangeText={setInputValue}
+              />
+              <TouchableOpacity style={{ padding: 10, backgroundColor: 'blue', borderRadius: 5 }} onPress={handleConfirm}>
+                <Text style={{ color: 'white', textAlign: 'center' }}>Confirm</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </Modal>
+
+      </View>
     </View>
   )
 }

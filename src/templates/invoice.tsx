@@ -3,9 +3,22 @@ import { Interface } from "../utils";
 interface Template {
     Items: Interface.Item[] | null;
     InvoiceItems: string[];
+    data : {
+        email: string,
+        items: string[],
+        quantity: number[],
+        total: number,
+        status: string,
+        mode: string,
+        shop: string,
+        _id: string,
+        createdAt: string,
+        updatedAt : string,
+        __v: number
+      }
     InvoiceQuantity: number[];
 }
-const invoice = ({ Items, InvoiceItems, InvoiceQuantity }: Template) => {
+const invoice = ({ Items, InvoiceItems, InvoiceQuantity,data }: Template) => {
     const X = new Date();
     let months = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sep", "Oct", "Nov", "Dec"];
     let month = months[X.getMonth()];
@@ -171,8 +184,8 @@ const invoice = ({ Items, InvoiceItems, InvoiceQuantity }: Template) => {
                                 <div style="width : 50%">
                                     <div class="row">
                                         <span class="invoice-sp" style="font-size: 20px; font-weight: 700;">
-                                            Invoice #
-                                        </span>INV-12
+                                            Invoice:
+                                        </span>${data._id}
                                         <!-- <br> -->
                                     </div>
                                     <div class="row">
