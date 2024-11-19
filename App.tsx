@@ -26,6 +26,7 @@ import { CashCounter, Profile, Store, Yard, } from './src/screens/Tabs';
 
 import SystemNavigationBar from 'react-native-system-navigation-bar';
 import { Stacks } from './src/Navigation';
+import ShowInvoice  from './src/menu/ShowInvoice';
 import Login from './src/menu/Login'
 
 
@@ -85,6 +86,11 @@ function App(): React.JSX.Element {
       name: "Shop",
       options: { headerShown: false },
       component: Store
+    },
+    {
+      name: "ShowInvoice",
+      options: { headerShown: false },
+      component: ShowInvoice
     },
   ]
 

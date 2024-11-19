@@ -13,7 +13,11 @@ const GetAllInvoice = async () => {
   const data = await SP.get(`/invoice/shop/66f2b588e93de4c964e76b5d`);
   return data.data;
 };
+const GetInvoice = async (id : string ) => {
+  const data = await SP.get(`/invoice/${id}`);
+  return data.data;
+};
 
 export const ShopServices = {
-  Shops,CreateInvoice,GetAllInvoice
+  Shops,CreateInvoice,GetAllInvoice,GetInvoice
 };
